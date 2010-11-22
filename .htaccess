@@ -3,7 +3,3 @@
     Header set Access-Control-Allow-Origin "*"
   </IfModule>
 </FilesMatch>
-
-<DirectoryMatch .*\.git/.*>
-    Deny From All
-</DirectoryMatch>
