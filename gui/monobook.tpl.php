@@ -180,7 +180,7 @@ document.onmousemove=positiontip
 <div id="globalWrapper">
 	<div id="column-content">
 		<div id="content"><a id="top"></a>
-<?php if (isset($this->veryImportantMessage)) : ?> 
+<?php if (isset($this->veryImportantMessage) && trim($this->veryImportantMessage) ) : ?> 
 			<div style="margin:10px 0 5px;border:3px dashed #F00;background-color:#FFC0CB;padding:5px 10px"><?php $this->eprint($this->veryImportantMessage); ?></div>
 <?php endif; ?>
 			<h1 class="firstHeading"><?php echo $this->lang['Title']; ?></h1>
