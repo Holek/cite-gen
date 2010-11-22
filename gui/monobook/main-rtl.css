@@ -1,0 +1,60 @@
+/*
+** MediaWiki 'monobook' style sheet for CSS2-capable browsers.
+** Copyright Gabriel Wicke - http://wikidev.net/
+** License: GPL (http://www.gnu.org/copyleft/gpl.html)
+**
+** Loosely based on http://www.positioniseverything.net/ordered-floats.html by Big John
+** and the Plone 2.0 styles, see http://plone.org/ (Alexander Limi,Joe Geldart & Tom Croucher,
+** Michael Zeltner and Geir Baekholt)
+** All you guys rock :)
+** Modified by odder for the {{cytuj ksiazke}} PHP script by Holek.
+*/
+
+/*  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      main settings: html, body, p, ul, fieldset, li, legend, form, textarea, h2, h5, a, hr, img
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+ul {
+	margin: .3em 1.5em 0 0;
+}
+fieldset {
+	padding: 0 0 1em 1em;
+}
+
+label {
+  float: right;
+  text-align: left;
+  padding-left: 7px;
+}
+#parsersContent {
+	float:left;
+}
+/*  >>>>>>>
+      ids
+    >>>>>>> */
+
+#column-content { width: 100%; float: left; margin: 0 -12.2em .6em 0; }
+#content {
+	margin-right: 163px;
+	border-left: none;
+}
+#globalWrapper { font-size: 127%; width: 100%; }
+#logo {
+	right: 4px;
+}
+
+/*  >>>>>>>>>>>
+      classes
+    >>>>>>>>>>> */ 
+.portlet h5 {
+	padding: 0 .5em 0 1em;
+}
+.pBody { font-size: 95%; background-color: #fff; border: 1px solid #aaa; padding: 0 .5em .3em .8em; }
+
+/* >>>>>>>>>>>>>>>
+     options box
+   >>>>>>>>>>>>>>> */
+
+#options { float:left;}
+#options-title {padding-left: 0.5em; float:right;}
+#shl {float:left;}

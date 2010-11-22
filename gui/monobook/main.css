@@ -1,0 +1,189 @@
+/*
+** MediaWiki 'monobook' style sheet for CSS2-capable browsers.
+** Copyright Gabriel Wicke - http://wikidev.net/
+** License: GPL (http://www.gnu.org/copyleft/gpl.html)
+**
+** Loosely based on http://www.positioniseverything.net/ordered-floats.html by Big John
+** and the Plone 2.0 styles, see http://plone.org/ (Alexander Limi,Joe Geldart & Tom Croucher,
+** Michael Zeltner and Geir Baekholt)
+** All you guys rock :)
+** Modified by odder for the {{cytuj ksiazke}} PHP script by Holek.
+*/
+
+/*  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      main settings: html, body, p, ul, fieldset, li, legend, form, textarea, h2, h5, a, hr, img
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+body { margin-top: 1em; margin-right: 0; margin-left: 0; } /* just a bad hack for IE */
+html { font: x-small sans-serif; background: #f9f9f9 url(headbg.jpg) 0 0 no-repeat; color: black; }
+p { margin: .4em 0 .5em 0; line-height: 1.5em; }
+ul {
+	line-height: 1.5em;
+	list-style-type: square;
+	padding: 0;
+	list-style-image: url(bullet.gif);
+}
+fieldset {
+	border: 1px solid #2f6fab;
+	margin: 1em 0 1em 0;
+	line-height: 1.5em;
+}
+li { margin-bottom: .1em; }
+legend { padding: .5em; font-size: 95%;}
+form { border: none; }
+textarea { width: 100%; padding: .1em; }
+h2, h3, h4, h5 {
+	margin: 0;
+	padding-top: .5em;
+	padding-bottom: .17em;
+}
+h2, h5 {
+	font-weight: normal;
+	border-bottom: 1px solid #aaa;
+}
+hr { height: 1px; background-color: #aaa; border: 0; margin-top: 2em; }
+a { text-decoration: none; color: #002bb8; }
+a:visited {color: #5a3696; }
+a:active { color: #faa700; }
+a:hover { text-decoration: underline; }
+img { border: none; vertical-align: middle; margin: 0;}
+
+pre {
+	background-color:#F9F9F9;
+	border:1px dashed #2F6FAB;
+	color:black;
+	line-height:1.1em;
+	padding:1em;
+}
+
+label {
+  display: block;
+  width: 293px;
+  margin-bottom: 7px;
+}
+
+td {
+	vertical-align:top;
+}
+/*  >>>>>>>
+      ids
+    >>>>>>> */
+
+#content {
+	margin-top: .8em;
+	padding: 0 1em 1em 1em;
+	background: #fff;
+	border: 1px solid #aaa;
+	line-height: 1.5em;
+	z-index: 2;
+}
+#globalWrapper { font-size: 127%; width: 100%; }
+#logo {
+	top: 7px;
+	position: absolute; /*needed to use z-index */
+	z-index: 3;
+	height: 155px;
+	width: 155px;
+	overflow: visible;
+}
+#parsersContent {
+	display: block;
+	border: 1px solid #aaa;
+	float:right;
+	padding: 7px 7px 7px 7px;
+}
+#parsersContent label {
+	display: compact !important;
+	width: auto !important;
+}
+.visualClear {
+	clear:both;
+}
+#footer {
+	background-color:white;
+	border-bottom:1px solid #FABD23;
+	border-top:1px solid #FABD23;
+	font-size:90%;
+	margin:0.6em 0 1em;
+	padding:0.4em 0 1.2em;
+	text-align:center;
+}
+
+#f-poweredbyico, #f-copyrightico {
+	margin:0 8px;
+	position:relative;
+	top:-2px;
+}
+#f-copyrightico {
+	float:left;
+	height:1%;
+}
+#f-poweredbyico {
+	float:right;
+	height:1%;
+}
+#footer li {
+	display:inline;
+	margin:0 1.3em;
+}
+/*  >>>>>>>>>>>
+      classes
+    >>>>>>>>>>> */ 
+ 
+.firstHeading {	margin-bottom: .4em; }
+.portlet { padding-top:155px; width: 151px; }
+.portlet h5 {
+	display: inline;
+	text-transform: lowercase;
+	font-size: 91%;
+	font-weight: normal;
+	border-bottom: 0px;
+}
+.portlet ul { line-height: 1.5em; list-style-type: square; list-style-image: url(bullet.gif); font-size: 95%; }
+.portlet li { padding: 0; margin: 0;}
+
+/* >>>>>>>>>>>>>>>>>>>>>>>>>
+     our very own settings  
+   >>>>>>>>>>>>>>>>>>>>>>>>> */
+
+.footer { margin-top: .7em; }
+.center { width: 100%; text-align: center; margin: 0 auto; }
+.inputs { margin-top: 1em; } 
+
+/* >>>>>>>>>>>>>>>
+     options box
+   >>>>>>>>>>>>>>> */
+
+#options { margin-top: .6em; display:block; border: 1px solid #aaa; font-size: 90%; padding: 0.2em 0.5em 0.2em 0.5em;}
+#options-head {display:block;}
+#options-content {clear:both; white-space:nowrap;}
+#shl {font-size: 80%;}
+
+/* >>>>>>>>>>>>>>>>>>>
+	 wikitable class
+   >>>>>>>>>>>>>>>>>>> */
+ 
+table.wikitable {
+	margin: 1em 1em 1em 0;
+	background: #f9f9f9;
+	border: 1px #aaa solid;
+	border-collapse: collapse;
+}
+table.wikitable tbody {
+	background: #fff;
+}
+ 
+table.wikitable th, table.wikitable td {
+	border: 1px #aaa solid;
+	padding: 0.2em;
+}
+ 
+table.wikitable th {
+	background: #f2f2f2;
+	text-align: center;
+}
+ 
+table.wikitable caption {
+	margin-left: inherit;
+	margin-right: inherit;
+}
