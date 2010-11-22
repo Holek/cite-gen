@@ -10,11 +10,13 @@
  * * rewrite settings
  * * check cache throughly
  */
-
 define('DATABASE_LINK',1);
 
 // Error handling & debugging
 define('DEBUG',0);
+
+// Very important message, use only in emergencies!
+$veryImportantMessage = '';
 
 $debug = '';
 require_once('./includes/Error.php');
@@ -298,6 +300,7 @@ $savant->query = $query;
 
 $savant->selects = $selects;
 
+$savant->veryImportantMessage = $veryImportantMessage;
 $savant->debug = ((DEBUG)?$debug:'');
 if (is_null($mimetype)) {
 	include ('./includes/htmlize.php'); // HTML mimetypes

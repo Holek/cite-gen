@@ -119,11 +119,7 @@ $self = str_replace('/','\/',$_SERVER['PHP_SELF']);
 * This notice MUST stay intact for legal use
 * Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
 ***********************************************/
-
-
-function ietruebody(){
-return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
-}
+function ietruebody(){return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body;}
 
 function ddrivetip(thetext, thecolor, thewidth){
 if (ns6||ie){
@@ -184,7 +180,10 @@ document.onmousemove=positiontip
 <div id="globalWrapper">
 	<div id="column-content">
 		<div id="content"><a id="top"></a>
-			<h2 class="firstHeading"><?php echo $this->lang['Title']; ?></h2>
+<?php if (isset($this->veryImportantMessage)) : ?> 
+			<div style="margin:10px 0 5px;border:3px dashed #F00;background-color:#FFC0CB;padding:5px 10px"><?php $this->eprint($this->veryImportantMessage); ?></div>
+<?php endif; ?>
+			<h1 class="firstHeading"><?php echo $this->lang['Title']; ?></h1>
 			<div id="bodyContent">
 				<h2><?php echo $this->lang['Input-title']; ?></h2>
 				<p>
@@ -287,8 +286,8 @@ document.onmousemove=positiontip
 		<div id="f-poweredbyico"><a href="/"><img src="http://upload.wikimedia.org/wikipedia/commons/0/0f/Wikimedia-toolserver-button.png" alt="Powered by the Toolserver"/></a></div>
 		<div id="f-copyrightico"><a href="/~holek/"><img src="/~holek/holekproject.png" alt="A Holek project"/></a></div>
 		<ul>
-			<li><a href="https://wiki.toolserver.org/view/%7Eholek/cite-gen/index.php#Source">Source of the generator</a>.</li>
-			<li>A series of tools by: Michał "Hołek" Połtyn</li>
+			<li><a href="https://github.com/Holek/cite-gen">Source of the generator</a>.</li>
+			<li>A series of tools by: <a href="http://mike.poltyn.com/">Mike "Hołek" Połtyn</a></li>
 			<li>XMMP: <tt>hołek@jabber.wroc.pl</tt></li>
 			<li>Wiki: <a href="http://pl.wikipedia.org/wiki/Dyskusja_wikipedysty:Holek">user talk</a></li>
 			<li>E-mail: <a href="http://pl.wikipedia.org/wiki/Specjalna:E-mail/Holek">via wiki</a></li>
