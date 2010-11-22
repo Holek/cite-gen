@@ -1,0 +1,7 @@
+This is a README file for a Citation templates generator.
+
+This generator has been designed to ease creation of Citation templates on various Wikipedias.
+
+It still is in a rather early stage of development, yet it is usable. Try it out at http://toolserver.org/~holek/cite-gen/
+
+If you want to help, have a look at Issues tab above to see current development problems that need to be resolved. By all means, you are encouraged to fork this project and work on it, as I don't have that much time to do so myself :(
