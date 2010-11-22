@@ -95,6 +95,9 @@
 </head>
 <body>
 	<div id="content">
+<?php if (isset($this->veryImportantMessage) && trim($this->veryImportantMessage) ) : ?> 
+		<div style="margin:10px 0 5px;border:3px dashed #F00;background-color:#FFC0CB;padding:5px 10px"><?php echo $this->veryImportantMessage; ?></div>
+<?php endif; ?>
 		<h2><a href="<?php echo $_SERVER['PHP_SELF']; ?>?template=monobook" target="_content"><?php echo $this->lang['Sidebar-title']; ?></a></h2>
 		<p><?php echo $this->lang['Sidebar-text']; ?></p>
 		<form action="redirect.php" method="get">
