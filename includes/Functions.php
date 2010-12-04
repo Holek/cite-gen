@@ -240,9 +240,9 @@ function getMessage($id, $s1 = '',$s2 = '',$s3 = '')
 	{
 		return $wgLanguageNames[$id];
 	}
-	else if (isset($messages[$scriptLanguage]) && isset($messages[$scriptLanguage][$id]))
+	else if (isset($messages[$scriptLanguage]) && isset($messages[$scriptLanguage]['ts-citegen-'.$id]))
 	{
-		return sprintf($messages[$scriptLanguage][$id], $s1, $s2, $s3);
+		return sprintf($messages[$scriptLanguage]['ts-citegen-'.$id], $s1, $s2, $s3);
 	}
 	else
 	{
