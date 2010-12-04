@@ -13,67 +13,10 @@ $rtlLanguages = array('ar','arc','dv','fa','he','kk','ks','mzn','ps','sd','ug','
 $messages = array();
 
 
-/** Message documentation (Message documentation)
- * @author Holek
- */
-$messages['qqq'] = array(
-	'ts-citegen-Title' => 'Generator title',
-	
-	// Button
-	'ts-citegen-Send' => 'Send button',
-	
-	// Input
-	'ts-citegen-Input-title' => 'Input secton',
-	'ts-citegen-Input-text' => 'Input section description',
-	'ts-citegen-Option-append-author-link' => 'Appends the author wikilinks into the template',
-	'ts-citegen-Option-append-newlines' => 'Appends new lines after each parameter',
-	'ts-citegen-Option-add-references' => 'Adds <ref> tags around citing templates',
-	'ts-citegen-Option-add-list' => 'Creates a wikilist of citing templates',
-	
-	// Output
-	'ts-citegen-Output-title' => 'Output section',
-	'ts-citegen-Output-select-disclaimer' => 'Disclaimer about output templates',
-	'ts-citegen-Wrong-input' => '"%s" is an unidentified input.',
-	
-	// Options
-	'ts-citegen-Parsers' => 'Parsers',
-	'ts-citegen-Skins' => 'Output',
-	'ts-citegen-Skin-skins' => 'Skins',
-	'ts-citegen-Skin-outputformat' => 'Output format',
-	
-	'ts-citegen-Template-lang' => 'Template language',
-	
-	// Sources
-	'ts-citegen-Sources-title' => 'Sources section title',
-	'ts-citegen-Sourcer-text' => 'An explanation test for sources section',
-	
-	// Sidebar-related messages
-	'ts-citegen-Sidebar-title' => 'Shortened title used for mini-generator',
-	'ts-citegen-Sidebar-text' => 'An explanation text used in the sidebar.',
-	
-	'ts-citegen-Sidebar-add-Firefox' => 'Caption of generator addition to Firefox\'s sidebar',
-	'ts-citegen-Sidebar-add-Opera' => 'Caption of generator addition to Opera\'s Hotlist',
-	'ts-citegen-Sidebar-add-IE-Mac' => 'Caption of generator addition to Mac IE\'s Page Holder',
-	'ts-citegen-Sidebar-add-IE-Mac-details' => 'Details on generator addition to Mac IE\'s Page Holder',
-
-	// Portlet messages
-	'ts-citegen-Tools' => 'Tools portlet section',
-	'ts-citegen-Other-languages' => 'Other languages section',
-
-	'ts-citegen-Save-it' => 'Link to itself/current query',
-	
-	// Error messages
-	'ts-citegen-Errors-title' => 'Errors section title',
-	'ts-citegen-Unavailable-API' => 'Error message: Wikimedia API is unavailable',
-	'ts-citegen-Unavailable-SQL' => 'Error message: Toolserver database is unavailable. %s is an error message',
-	'ts-citegen-base-disabled' => 'Error message: A book database is unavailable. <tt>%s</tt> is the name of the database.'
-	
-
-);
-
 
 /** English (English)
  * @author Holek
+
  * @author Wpedzich
  */
 $messages['en'] = array(
@@ -131,6 +74,64 @@ $messages['en'] = array(
 
 );
 
+
+/** Message documentation (Message documentation)
+ * @author Holek
+ */
+$messages['qqq'] = array(
+	'ts-citegen-Title' => 'Generator title',
+	
+	// Button
+	'ts-citegen-Send' => 'Send button',
+	
+	// Input
+	'ts-citegen-Input-title' => 'Input secton',
+	'ts-citegen-Input-text' => 'Input section description',
+	'ts-citegen-Option-append-author-link' => 'Appends the author wikilinks into the template',
+	'ts-citegen-Option-append-newlines' => 'Appends new lines after each parameter',
+	'ts-citegen-Option-add-references' => 'Adds <ref> tags around citing templates',
+	'ts-citegen-Option-add-list' => 'Creates a wikilist of citing templates',
+	
+	// Output
+	'ts-citegen-Output-title' => 'Output section',
+	'ts-citegen-Output-select-disclaimer' => 'Disclaimer about output templates',
+	'ts-citegen-Wrong-input' => '"%s" is an unidentified input.',
+	
+	// Options
+	'ts-citegen-Parsers' => 'Parsers',
+	'ts-citegen-Skins' => 'Output',
+	'ts-citegen-Skin-skins' => 'Skins',
+	'ts-citegen-Skin-outputformat' => 'Output format',
+	
+	'ts-citegen-Template-lang' => 'Template language',
+	
+	// Sources
+	'ts-citegen-Sources-title' => 'Sources section title',
+	'ts-citegen-Sourcer-text' => 'An explanation test for sources section',
+	
+	// Sidebar-related messages
+	'ts-citegen-Sidebar-title' => 'Shortened title used for mini-generator',
+	'ts-citegen-Sidebar-text' => 'An explanation text used in the sidebar.',
+	
+	'ts-citegen-Sidebar-add-Firefox' => 'Caption of generator addition to Firefox\'s sidebar',
+	'ts-citegen-Sidebar-add-Opera' => 'Caption of generator addition to Opera\'s Hotlist',
+	'ts-citegen-Sidebar-add-IE-Mac' => 'Caption of generator addition to Mac IE\'s Page Holder',
+	'ts-citegen-Sidebar-add-IE-Mac-details' => 'Details on generator addition to Mac IE\'s Page Holder',
+
+	// Portlet messages
+	'ts-citegen-Tools' => 'Tools portlet section',
+	'ts-citegen-Other-languages' => 'Other languages section',
+
+	'ts-citegen-Save-it' => 'Link to itself/current query',
+	
+	// Error messages
+	'ts-citegen-Errors-title' => 'Errors section title',
+	'ts-citegen-Unavailable-API' => 'Error message: Wikimedia API is unavailable',
+	'ts-citegen-Unavailable-SQL' => 'Error message: Toolserver database is unavailable. %s is an error message',
+	'ts-citegen-base-disabled' => 'Error message: A book database is unavailable. <tt>%s</tt> is the name of the database.'
+	
+
+);
 
 
 /** Polish (Polski)
