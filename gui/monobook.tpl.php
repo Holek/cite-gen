@@ -69,44 +69,45 @@ $self = str_replace('/','\/',$_SERVER['PHP_SELF']);
 		
 		function runMethod(checkbox)
 		{
+			var output = document.getElementById('output');
 			switch (checkbox)
 			{
 				case 'add-list':
 					if (document.getElementById('add-list').checked==false) {
 						if (document.getElementById('add-references').checked == true) {
-							document.getElementById('output').value = document.getElementById('output').value.replace(/\* <ref/g, '<ref');
+							output.value = output.value.replace(/\* <ref/g, '<ref');
 						}
 						else {
-							document.getElementById('output').value = document.getElementById('output').value.replace(/\* \{\{/g, '{{');
+							output.value = output.value.replace(/\* \{\{/g, '{{');
 						}
 					}
 					else {
 						if (document.getElementById('add-references').checked == true) {
-							document.getElementById('output').value = document.getElementById('output').value.replace(/<ref/g, '* <ref');
+							output.value = output.value.replace(/<ref/g, '* <ref');
 						}
 						else {
-							document.getElementById('output').value = document.getElementById('output').value.replace(/\{\{/g, '* {{');
+							output.value = output.value.replace(/\{\{/g, '* {{');
 						}
 					}
 				break;
 				case 'add-references':
 					if (document.getElementById('add-references').checked==false) {
-						output = document.getElementById('output').value.replace(/<ref(| name="(.*?)")>/g, '');
-						output = output.replace(/<\/ref>/g, '');
-						document.getElementById('output').value = output;
+						outputText = output.value.replace(/<ref(| name="(.*?)")>/g, '');
+						outputText = outputText.replace(/<\/ref>/g, '');
+						output.value = outputText;
 					}
 					else {
-						output = document.getElementById('output').value.replace(/\{\{/g, '<ref>{{');
-						output = output.replace(/\}\}/g, '}}</ref>');
-						document.getElementById('output').value = output;
+						outputText = output.value.replace(/\{\{/g, '<ref>{{');
+						outputText = outputText.replace(/\}\}/g, '}}</ref>');
+						output.value = outputText;
 					}
 					break;
 				case 'append-newlines':
 					if (document.getElementById('append-newlines').checked==false) {
-						document.getElementById('output').value = document.getElementById('output').value.replace(/\n\| /g, ' | ');
+						output.value = output.value.replace(/\n\| /g, ' | ');
 					}
 					else {
-						document.getElementById('output').value = document.getElementById('output').value.replace(/ \| /g, "\n| ");
+						output.value = output.value.replace(/ \| /g, "\n| ");
 					}
 					break;
 				default:
