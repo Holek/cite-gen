@@ -328,35 +328,3 @@ $savant->direction = ((in_array($scriptLanguage,$rtlLanguages))?'rtl':'ltr');
 
 $savant->display($template.'.tpl.php');
 
-/* @TODO: instead let's use database connection we already have...
-
-if (defined(GATHERINFO) && GATHERINFO == true) {
-	$mycnf = parse_ini_file("/home/".get_current_user()."/.my.cnf");
-	$username = $mycnf['user'];
-	$password = $mycnf['password'];
-	unset($mycnf);
-	$mysqli = new mysqli('mysql',$username,$password);
-
-	// if connection failed, just silently exit, the gathered data is not that important
-	if (mysqli_connect_errno()) {
-		exit();
-	}
-
-	$mysqli->set_charset('utf-8');
-	$mysqli->select_db('u_holek_citegen_stats_p');
-
-	$useragent = $mysqli->real_escape_string($_SERVER["HTTP_USER_AGENT"]);
-	$query = $mysqli->real_escape_string($_SERVER["QUERY_STRING"]);
-	$ipParts = explode('.',$_SERVER["REMOTE_HOST"]);
-	$ip = '';
-	foreach($ipParts as $ipPart) {
-		$ip.=dechex($ipPart);
-	}
-	$ip = $mysqli->real_espace_string($ip);
-
-	$sql = 'INSERT INTO json_queries (timestamp, useragent, querystring, remote_ip) VALUES ('.(int)$_SERVER["REQUEST_TIME"].', "'.$useragent.'", "'.$query.'", "'.$ip.'")';
-	$mysqli->query($sql);
-
-	$mysqli->close();
-} */
-
