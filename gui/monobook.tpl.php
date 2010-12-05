@@ -7,7 +7,7 @@ $self = str_replace('/','\/',$_SERVER['PHP_SELF']);
 <head>
 	<title><?php echo $this->lang['Title']; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta content="Michal Poltyn" name="author" />
+	<meta content="Mike Poltyn" name="author" />
 	<link rel="stylesheet" type="text/css" href="gui/monobook/main.css" />
 	<link rel="stylesheet" type="text/css" href="gui/monobook/main-<?php echo $this->direction; ?>.css" />
 <?php if (file_exists('./gui/monobook/lang-'.$this->scriptLanguage.'.css')) : ?>
@@ -18,102 +18,99 @@ $self = str_replace('/','\/',$_SERVER['PHP_SELF']);
 	<!--[if IE 5.5000]><style type="text/css">@import "gui/monobook/fixes/IE55Fixes.css";</style><![endif]-->
 	<!--[if IE 6]><style type="text/css">@import "gui/monobook/fixes/IE60Fixes.css";</style><![endif]-->
 	<!--[if IE 7]><style type="text/css">@import "gui/monobook/fixes/IE70Fixes.css";</style><![endif]-->
-	<style type="text/css">
-		/* <![CDATA[ */
-		#dhtmltooltip{
-			position: absolute;
-			width: 150px;
-			border: 2px solid black;
-			padding: 2px;
-			background-color: lightyellow;
-			visibility: hidden;
-			z-index: 100;
-		}
-		/* ]]> */
-	</style>
-	<script type="text/javascript">
-		//<![CDATA[
-		function onLoad()
-		{
-			/************************
-			     Sidebar panels
-			************************/
-			var sidebar = '';
-			if( window.sidebar && window.sidebar.addPanel ) {
-				//Gecko; use JavaScript to add the sidebar panel
-				sidebar = '<a href="javascript:window.sidebar.addPanel( \'<?php echo $encodedTitle; ?>\', \'http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar\', \'\' );"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Firefox']); ?><\/a>' ;
-			} else if( window.opera && window.print ) {
-				//Opera 6+; use a regular link with the rel attribute set to 'sidebar' and a title to create a Hotlist panel
-				sidebar = '<a title="<?php echo $encodedTitle; ?>" rel="sidebar" href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Opera']); ?><\/a>' ;
-			} else if( window.ActiveXObject && navigator.platform.indexOf('Mac') + 1 && !navigator.__ice_version && ( !window.ScriptEngine || ScriptEngine().indexOf('InScript') == -1 ) ) {
-				//IE 4+ (Mac); the page can be manually added to the Page Holder - open the page for them to add it
-				// $this->lang['Sidebar-add-IE-Mac-details'] = 
-				sidebar = '<a href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar" onclick="window.alert(\'<?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac-details']);?>\');" target="_blank"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac']); ?><\/a>' ;
-			}
-			
-			var tools = document.getElementById('tools-portlet');
-			if (tools && sidebar != '') {
-				sidebarLi = document.createElement('li');
-				sidebarLi.innerHTML = sidebar;
-				tools.appendChild(sidebarLi);
-			}
+<style type="text/css">
+/* <![CDATA[ */
+#dhtmltooltip{position:absolute;width:150px;border:2px solid black;padding:2px;background-color:lightyellow;visibility:hidden;z-index:100}
+<?php 
+$veryImportantMessage = (bool)(isset($this->veryImportantMessage) && trim($this->veryImportantMessage));
+if ( $veryImportantMessage ) : ?>
+#veryImportantMessage{margin:10px 0 5px;border:3px dashed #F88;background-color:#FFE0EB;padding:5px 10px}
+<?php endif; ?>
+/* ]]> */
+</style>
+<script type="text/javascript">
+//<![CDATA[
+function onLoad()
+{
+	/************************
+	     Sidebar panels
+	************************/
+	var sidebar = '';
+	if( window.sidebar && window.sidebar.addPanel ) {
+		//Gecko; use JavaScript to add the sidebar panel
+		sidebar = '<a href="javascript:window.sidebar.addPanel( \'<?php echo $encodedTitle; ?>\', \'http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar\', \'\' );"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Firefox']); ?><\/a>' ;
+	} else if( window.opera && window.print ) {
+		//Opera 6+; use a regular link with the rel attribute set to 'sidebar' and a title to create a Hotlist panel
+		sidebar = '<a title="<?php echo $encodedTitle; ?>" rel="sidebar" href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Opera']); ?><\/a>' ;
+	} else if( window.ActiveXObject && navigator.platform.indexOf('Mac') + 1 && !navigator.__ice_version && ( !window.ScriptEngine || ScriptEngine().indexOf('InScript') == -1 ) ) {
+		//IE 4+ (Mac); the page can be manually added to the Page Holder - open the page for them to add it
+		// $this->lang['Sidebar-add-IE-Mac-details'] = 
+		sidebar = '<a href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar" onclick="window.alert(\'<?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac-details']);?>\');" target="_blank"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac']); ?><\/a>' ;
+	}
+	
+	var tools = document.getElementById('tools-portlet');
+	if (tools && sidebar != '') {
+		sidebarLi = document.createElement('li');
+		sidebarLi.innerHTML = sidebar;
+		tools.appendChild(sidebarLi);
+	}
 
-			offsetxpoint=-60 //Customize x offset of tooltip
-			offsetypoint=20 //Customize y offset of tooltip
-			ie=document.all
-			ns6=document.getElementById && !document.all
-			enabletip=false
-			if (ie||ns6)
-			tipobj=document.all? document.all["dhtmltooltip"] : document.getElementById? document.getElementById("dhtmltooltip") : ""
-		}
-		
-		function runMethod(checkbox)
-		{
-			var output = document.getElementById('output');
-			switch (checkbox)
-			{
-				case 'add-list':
-					if (document.getElementById('add-list').checked==false) {
-						if (document.getElementById('add-references').checked == true) {
-							output.value = output.value.replace(/\* <ref/g, '<ref');
-						}
-						else {
-							output.value = output.value.replace(/\* \{\{/g, '{{');
-						}
-					}
-					else {
-						if (document.getElementById('add-references').checked == true) {
-							output.value = output.value.replace(/<ref/g, '* <ref');
-						}
-						else {
-							output.value = output.value.replace(/\{\{/g, '* {{');
-						}
-					}
-				break;
-				case 'add-references':
-					if (document.getElementById('add-references').checked==false) {
-						outputText = output.value.replace(/<ref(| name="(.*?)")>/g, '');
-						outputText = outputText.replace(/<\/ref>/g, '');
-						output.value = outputText;
-					}
-					else {
-						outputText = output.value.replace(/\{\{/g, '<ref>{{');
-						outputText = outputText.replace(/\}\}/g, '}}</ref>');
-						output.value = outputText;
-					}
-					break;
-				case 'append-newlines':
-					if (document.getElementById('append-newlines').checked==false) {
-						output.value = output.value.replace(/\n\| /g, ' | ');
-					}
-					else {
-						output.value = output.value.replace(/ \| /g, "\n| ");
-					}
-					break;
-				default:
-				break;
+	offsetxpoint=-60 //Customize x offset of tooltip
+	offsetypoint=20 //Customize y offset of tooltip
+	ie=document.all
+	ns6=document.getElementById && !document.all
+	enabletip=false
+	if (ie||ns6)
+	tipobj=document.all? document.all["dhtmltooltip"] : document.getElementById? document.getElementById("dhtmltooltip") : ""
+}
+
+function runMethod(checkbox)
+{
+	var output = document.getElementById('output');
+	switch (checkbox)
+	{
+		case 'add-list':
+			if (document.getElementById('add-list').checked==false) {
+				if (document.getElementById('add-references').checked == true) {
+					output.value = output.value.replace(/\* <ref/g, '<ref');
+				}
+				else {
+					output.value = output.value.replace(/\* \{\{/g, '{{');
+				}
 			}
-		}
+			else {
+				if (document.getElementById('add-references').checked == true) {
+					output.value = output.value.replace(/<ref/g, '* <ref');
+				}
+				else {
+					output.value = output.value.replace(/\{\{/g, '* {{');
+				}
+			}
+		break;
+		case 'add-references':
+			if (document.getElementById('add-references').checked==false) {
+				outputText = output.value.replace(/<ref(| name="(.*?)")>/g, '');
+				outputText = outputText.replace(/<\/ref>/g, '');
+				output.value = outputText;
+			}
+			else {
+				outputText = output.value.replace(/\{\{/g, '<ref>{{');
+				outputText = outputText.replace(/\}\}/g, '}}</ref>');
+				output.value = outputText;
+			}
+			break;
+		case 'append-newlines':
+			if (document.getElementById('append-newlines').checked==false) {
+				output.value = output.value.replace(/\n\| /g, ' | ');
+			}
+			else {
+				output.value = output.value.replace(/ \| /g, "\n| ");
+			}
+			break;
+		default:
+		break;
+	}
+}
 
 /***********************************************
 * Cool DHTML tooltip script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
@@ -172,8 +169,8 @@ tipobj.style.width=''
 }
 
 document.onmousemove=positiontip
-		//]]>
-	</script>
+//]]>
+</script>
 </head>
 
 <body style="direction: <?php echo $this->direction; ?>;" class="mediawiki ns--1 <?php echo $this->direction; ?>" onload="onLoad();"> 
@@ -181,8 +178,8 @@ document.onmousemove=positiontip
 <div id="globalWrapper">
 	<div id="column-content">
 		<div id="content"><a id="top"></a>
-<?php if (isset($this->veryImportantMessage) && trim($this->veryImportantMessage) ) : ?> 
-			<div style="margin:10px 0 5px;border:3px dashed #F00;background-color:#FFC0CB;padding:5px 10px"><?php echo $this->veryImportantMessage; ?></div>
+<?php if ($veryImportantMessage) : ?> 
+			<div id="veryImportantMessage"><?php echo $this->veryImportantMessage; ?></div>
 <?php endif; ?>
 			<h1 class="firstHeading"><?php echo $this->lang['Title']; ?></h1>
 			<div id="bodyContent">
