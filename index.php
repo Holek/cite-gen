@@ -40,7 +40,7 @@ if (!include_once('./messages/allMessages.php'))
 <pre>cd messages
 svn checkout http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen/ .</pre>
 
-<p>For more information about translations, please refer to <a href="README">the README file</a>.</p>'
+<p>For more information about translations, please refer to <a href="README">the README file</a>.</p>';
 	exit();
 }
 unset($messages['qqq']); // delete message documentation out of possible languages
