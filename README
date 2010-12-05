@@ -5,3 +5,18 @@ This generator has been designed to ease creation of Citation templates on vario
 It still is in a rather early stage of development, yet it is usable. Try it out at http://toolserver.org/~holek/cite-gen/
 
 If you want to help, have a look at Issues tab above to see current development problems that need to be resolved. By all means, you are encouraged to fork this project and work on it, as I don't have that much time to do so myself :(
+
+Deploying the generator
+-----------------------
+The generator has two sources. Main code is hosted on Github[1], and translation messages are hosted in MediaWiki's SVN[2]. The reason behind this is internationalization. Translations are done via TranlateWiki[3] and updated daily with a cron job.
+
+
+
+References
+----------
+
+[1] https://github.com/Holek/cite-gen/
+[2] http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen/allMessages.php
+[3] http://translatewiki.net
+
+  

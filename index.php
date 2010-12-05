@@ -28,8 +28,26 @@ require_once('./includes/abstractClasses.php');
 
 // I18N files
 require_once('./messages/Names.php');
-require_once('./messages/allMessages.php');
-unset($messages['qqq']); // delete $messages['qqq'] out of possible languages
+try {
+	include_once('./messages/allMessages.php');
+} catch( $e ) {
+	echo <<<ERRORNOTICE
+<!doctype html>
+
+<h1>Citation generator fatal error</h1>
+<p>The citation generator requires <a href="http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen/allMessages.php">messages/allMessages.php</a> file. This file can be obtained from MediaWiki's SVN by checking out <tt>/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen</tt> folder:</p>
+
+<p>Assuming you are in Citation generator's root folder, use these commands to quickly set it up:</p>
+
+<pre>cd messages
+svn checkout http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen/ .</pre>
+
+<p>For more information about translations, please refer to <a href="README">the README file</a>.</p>
+
+ERRORNOTICE;
+	exit();
+}
+unset($messages['qqq']); // delete message documentation out of possible languages
 
 // URL query array
 $query = array();
@@ -312,6 +330,8 @@ $savant->direction = ((in_array($scriptLanguage,$rtlLanguages))?'rtl':'ltr');
 
 $savant->display($template.'.tpl.php');
 
+/* @TODO: instead let's use database connection we already have...
+
 if (defined(GATHERINFO) && GATHERINFO == true) {
 	$mycnf = parse_ini_file("/home/".get_current_user()."/.my.cnf");
 	$username = $mycnf['user'];
@@ -340,4 +360,5 @@ if (defined(GATHERINFO) && GATHERINFO == true) {
 	$mysqli->query($sql);
 
 	$mysqli->close();
-}
+} */
+
