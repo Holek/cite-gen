@@ -31,20 +31,17 @@ require_once('./messages/Names.php');
 try {
 	include_once('./messages/allMessages.php');
 } catch( $e ) {
-	$html = <<<ERRORNOTICE
-<!doctype html>
+	echo '<!doctype html>
 
 <h1>Citation generator fatal error</h1>
-<p>The citation generator requires <a href="http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen/allMessages.php">messages/allMessages.php</a> file. This file can be obtained from MediaWiki's SVN by checking out <tt>/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen</tt> folder:</p>
+<p>The citation generator requires <a href="http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen/allMessages.php">messages/allMessages.php</a> file. This file can be obtained from MediaWiki\'s SVN by checking out <tt>/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen</tt> folder:</p>
 
-<p>Assuming you are in Citation generator's root folder, use these commands to quickly set it up:</p>
+<p>Assuming you are in Citation generator\'s root folder, use these commands to quickly set it up:</p>
 
 <pre>cd messages
 svn checkout http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen/ .</pre>
 
-<p>For more information about translations, please refer to <a href="README">the README file</a>.</p>
-ERRORNOTICE;
-	echo $html;
+<p>For more information about translations, please refer to <a href="README">the README file</a>.</p>'
 	exit();
 }
 unset($messages['qqq']); // delete message documentation out of possible languages
