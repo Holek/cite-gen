@@ -228,21 +228,26 @@ function areArticles(&$titles_array)
 /**
  * I18N message getter.
  * @param string $id
- * @param string $s1 [optional]
- * @param string $s2 [optional]
- * @param string $s3 [optional]
  * @return string
  */
-function getMessage($id, $s1 = '',$s2 = '',$s3 = '')
+function getMessage($id)
 {
 	global $messages, $scriptLanguage, $wgLanguageNames;
 	if (isset($wgLanguageNames[$id]))
 	{
 		return $wgLanguageNames[$id];
 	}
-	else if (isset($messages[$scriptLanguage]) && isset($messages[$scriptLanguage]['ts-citegen-'.$id]))
+	else if (isset($messages[$scriptLanguage]) && (isset($messages[$scriptLanguage]['ts-citegen-'.$id]) || isset($messages['en']['ts-citegen-'.$id])))
 	{
-		return sprintf($messages[$scriptLanguage]['ts-citegen-'.$id], $s1, $s2, $s3);
+		$args = func_get_args();
+		array_shift($args);
+		$message = (isset($messages[$scriptLanguage]['ts-citegen-'.$id]) ? $messages[$scriptLanguage]['ts-citegen-'.$id] : $messages['en']['ts-citegen-'.$id]);
+		if (count($args)) {
+			array_unshift($args, $message);
+			return call_user_func_array('sprintf',$args);
+		} else {
+			return $message;
+		}
 	}
 	else
 	{
@@ -257,11 +262,13 @@ function getMessage($id, $s1 = '',$s2 = '',$s3 = '')
 function prepareLanguageArray()
 {
 	global $messages, $scriptLanguage;
+	$notEnglish = $scriptLanguage !== 'en';
 	$langAry = array();
-	foreach($messages[$scriptLanguage] as $key => $message) {
+	foreach($messages['en'] as $key => $message) {
 		// strip "ts-citegen-" prefix from translation keys for templates
 		// length of ts-citegen- equals 11
-		$langAry[substr($key, 11)] = $message;
+		// also doing magic for not fully translated languages in TranslateWiki
+		$langAry[substr($key, 11)] = ( ( $notEnglish && isset( $messages[$scriptLanguage][$key] ) ) ? $messages[$scriptLanguage][$key] : $message );
 	}
 	return $langAry;
 }
