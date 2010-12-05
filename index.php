@@ -31,7 +31,7 @@ require_once('./messages/Names.php');
 try {
 	include_once('./messages/allMessages.php');
 } catch( $e ) {
-	echo <<<ERRORNOTICE
+	$html = <<<ERRORNOTICE
 <!doctype html>
 
 <h1>Citation generator fatal error</h1>
@@ -43,8 +43,8 @@ try {
 svn checkout http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen/ .</pre>
 
 <p>For more information about translations, please refer to <a href="README">the README file</a>.</p>
-
 ERRORNOTICE;
+	echo $html;
 	exit();
 }
 unset($messages['qqq']); // delete message documentation out of possible languages
