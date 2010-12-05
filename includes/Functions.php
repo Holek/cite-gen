@@ -251,6 +251,22 @@ function getMessage($id, $s1 = '',$s2 = '',$s3 = '')
 }
 
 /**
+ * Prepares language array to use in templates
+ * @return array
+ */
+function prepareLanguageArray()
+{
+	global $messages, $scriptLanguage;
+	$langAry = array();
+	foreach($messages[$scriptLanguage] as $key => $message) {
+		// strip "ts-citegen-" prefix from translation keys for templates
+		// length of ts-citegen- equals 11
+		$langAry[substr($key, 11)] = $message;
+	}
+	return $langAry;
+}
+
+/**
  * Function for writing debug info from within various classes.
  * @param string $message
  */

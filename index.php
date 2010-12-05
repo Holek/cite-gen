@@ -28,9 +28,8 @@ require_once('./includes/abstractClasses.php');
 
 // I18N files
 require_once('./messages/Names.php');
-try {
-	include_once('./messages/allMessages.php');
-} catch( $e ) {
+if (!include_once('./messages/allMessages.php'))
+{
 	echo '<!doctype html>
 
 <h1>Citation generator fatal error</h1>
@@ -53,7 +52,7 @@ parse_str($_SERVER['QUERY_STRING'],$query);
 // Language
 $scriptLanguage = get('scriptlang', (($_COOKIE['languages']['script'] && preg_match( '/^[a-z-]+$/', $_COOKIE['languages']['script']))?$_COOKIE['languages']['script']:substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2)));
 
-if (!$messages[$scriptLanguage]['Title'])
+if (getMessage('Title') != 'Title')
 {
 	$scriptLanguage='en';
 }
@@ -266,7 +265,9 @@ while(!is_bool($file = readdir($dh)))
 		{
 			if (!$isTemplate)
 			{
-				$isTemplate = true;
+				$isTemplate = true;if (!include_once('./messages/allMessages.php'))
+{
+
 			}
 			if ($ini['category'] == 'skins' && !$ini['dontstore'])
 			{
@@ -306,7 +307,7 @@ $savant->errors = $error->output_errors();
 
 $savant->input = $inputArray;
 
-$savant->lang = $messages[$scriptLanguage];
+$savant->lang = prepareLanguageArray();
 $savant->languages = $wgLanguageNames;
 $savant->scriptLanguage = $scriptLanguage;
 $savant->templateLanguage = $templateLanguage;
