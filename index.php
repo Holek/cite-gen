@@ -52,7 +52,7 @@ parse_str($_SERVER['QUERY_STRING'],$query);
 // Language
 $scriptLanguage = get('scriptlang', (($_COOKIE['languages']['script'] && preg_match( '/^[a-z-]+$/', $_COOKIE['languages']['script']))?$_COOKIE['languages']['script']:substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2)));
 
-if (getMessage('Title') != 'Title')
+if (getMessage('Title') === 'Title')
 {
 	$scriptLanguage='en';
 }
