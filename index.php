@@ -265,9 +265,7 @@ while(!is_bool($file = readdir($dh)))
 		{
 			if (!$isTemplate)
 			{
-				$isTemplate = true;if (!include_once('./messages/allMessages.php'))
-{
-
+				$isTemplate = true;
 			}
 			if ($ini['category'] == 'skins' && !$ini['dontstore'])
 			{
