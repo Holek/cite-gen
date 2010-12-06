@@ -8,9 +8,18 @@ If you want to help, have a look at Issues tab above to see current development 
 
 Deploying the generator
 -----------------------
-The generator has two sources. Main code is hosted on Github[1], and translation messages are hosted in MediaWiki's SVN[2]. The reason behind this is internationalization. Translations are done via TranlateWiki[3] and updated daily with a cron job.
+The generator has two sources. Main code is hosted on Github[1], and translation messages are hosted in MediaWiki's SVN[2]. The reason behind this is internationalization. Translations are done via TranlateWiki[3] and updated daily in the SVN.
 
+I18N file can be obtained from MediaWiki's SVN by checking out /mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen folder. Assuming you are in Citation generator's root folder, use these commands to quickly set it up:
 
+ cd messages
+ svn checkout http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/ToolserverTools/HolekCiteGen/ .
+
+You can also create a cron job to update allMessages.php:
+
+ @daily cd $HOME/public_html/cite-gen/messages && svn up
+
+If you forget to checkout the translation file, you will be reminded upon loading the citation generator with instructions how to proceed.
 
 References
 ----------
