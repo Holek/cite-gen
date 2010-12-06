@@ -20,9 +20,9 @@ class WWW extends Parser {
 	 */
 	private $errors = array();
 
-    /**
-     * Constructor for objects of class WWW
-     */
+	/**
+	 * Constructor for objects of class WWW
+	 */
 	public function __construct($url)
 	{
 		$fh = fopen($url,'r');
@@ -45,9 +45,9 @@ class WWW extends Parser {
 			}
 			fclose($fh);
 
-			mb_eregi('<title>(.*?)<\/title>',$text,$title); // put found title in $title[1]
+			preg_match('/<title>(.*?)<\/title>/i',$text,$title); // put found title in $title[1]
 
-			$this->title = strip_tags(ereg_replace(' +', ' ', $title[1])); // get rid of unnecessary whitespaces
+			$this->title = trim(strip_tags(ereg_replace(' +', ' ', $title[1]))); // get rid of unnecessary whitespaces
 			$charset = 'UTF-8'; // default charset value
 			if ($foundCharset) // if found charset...
 			{
@@ -71,8 +71,8 @@ class WWW extends Parser {
 						$replaceArray[1][] = "";
 					}
 					$this->title = str_replace($replaceArray[0], $replaceArray[1], $this->title); // get rid of illegal SGML chars and HTML and PHP tags
+					$this->title = iconv($charset, 'UTF-8//TRANSLIT', $this->title); // ..and convert the title accordingly (ignore weird characters)
 				}
-				$this->title = iconv($charset, 'UTF-8//TRANSLIT', $this->title); // ..and convert the title accordingly (ignore weird characters)
 				$refname = preg_match('/((?:[a-z][a-z\.\d\-]+)\.(?:[a-z][a-z\-]+))(?![\w\.])/is',$url,$urlParts);
 				$this->refname = $urlParts[1];
 			}
@@ -92,11 +92,11 @@ class WWW extends Parser {
 		}
 	}
 
-    /**
-     * Title getter. Returns book title if found, FALSE if not found.
-     * 
-     * @return     mixed
-     */
+	/**
+	 * Title getter. Returns book title if found, FALSE if not found.
+	 * 
+	 * @return     mixed
+	 */
 	public function getTitle()
 	{
 		return $this->title;
@@ -112,21 +112,20 @@ class WWW extends Parser {
 		// Here you can sort which fields are meant to be shown first
 		// at the generated template. Simply the first one goes first. ;)
 		return array(
-						'title' => $this->title,
-						'__refname' => $this->refname,
-						'url' => $this->url,
-						'__sourceurl' => $this->url // The only non-existant in {{Cite url}} field. Consists of source URL where the info was taken from
-					);
+				'title' => $this->title,
+				'url' => $this->url,
+				'__refname' => $this->refname,
+				'__sourceurl' => $this->url
+			);
 	}
 
-    /**
-     * Returns $errors.
-     * @see isbnDB::$errors
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
+	/**
+	 * Returns $errors.
+	 * @see isbnDB::$errors
+	 */
+	public function getErrors()
+	{
+		return $this->errors;
+	}
 }
 ?>
