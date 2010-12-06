@@ -10,9 +10,6 @@ $self = str_replace('/','\/',$_SERVER['PHP_SELF']);
 	<meta content="Mike Poltyn" name="author" />
 	<link rel="stylesheet" type="text/css" href="gui/monobook/main.css" />
 	<link rel="stylesheet" type="text/css" href="gui/monobook/main-<?php echo $this->direction; ?>.css" />
-<?php if (file_exists('./gui/monobook/lang-'.$this->scriptLanguage.'.css')) : ?>
-	<link rel="stylesheet" type="text/css" href="gui/monobook/lang-<?php echo $this->scriptLanguage; ?>.css" />
-<?php endif; ?>
 	<link rel="icon" type="image/png" href="gui/monobook/favicon.png" />
 	<!--[if lt IE 5.5000]><style type="text/css">@import "gui/monobook/fixes/IE50Fixes.css";</style><![endif]-->
 	<!--[if IE 5.5000]><style type="text/css">@import "gui/monobook/fixes/IE55Fixes.css";</style><![endif]-->

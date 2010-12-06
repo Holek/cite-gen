@@ -48,7 +48,7 @@ if($mime == 'application/xhtml+xml') {
 } else {
     ob_start('htmlize');
     $docstart = $quirksmode.'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="'.$scriptLanguage.'">
+<html lang="'.$scriptLanguage.'" class="lang-'.$scriptLanguage.'">
 ';
 }
 header('Content-Type: '.$mime.';charset='.$charset);

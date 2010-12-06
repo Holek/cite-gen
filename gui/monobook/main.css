@@ -142,10 +142,6 @@ td {
 .portlet ul { line-height: 1.5em; list-style-type: square; list-style-image: url(bullet.gif); font-size: 95%; }
 .portlet li { padding: 0; margin: 0;}
 
-/* >>>>>>>>>>>>>>>>>>>>>>>>>
-     our very own settings  
-   >>>>>>>>>>>>>>>>>>>>>>>>> */
-
 .footer { margin-top: .7em; }
 .center { width: 100%; text-align: center; margin: 0 auto; }
 .inputs { margin-top: 1em; } 
@@ -186,4 +182,8 @@ table.wikitable th {
 table.wikitable caption {
 	margin-left: inherit;
 	margin-right: inherit;
+}
+/* Language settings */
+.lang-de .portlet h5, .lang-lb .portlet h5 {
+	text-transform: none;
 }
