@@ -43,7 +43,7 @@ if(stristr($_SERVER['HTTP_USER_AGENT'],'W3C_Validator')     ||
 if($mime == 'application/xhtml+xml') {
     $docstart = '<?xml version="1.0" encoding="'.$charset.'" ?'.'>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$scriptLanguage.'">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$scriptLanguage.'" class="lang-'.$scriptLanguage.'">
 ';
 } else {
     ob_start('htmlize');
