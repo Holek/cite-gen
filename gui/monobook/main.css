@@ -180,10 +180,19 @@ table.wikitable th {
 }
  
 table.wikitable caption {
-	margin-left: inherit;
-	margin-right: inherit;
+margin-left: inherit;
+margin-right: inherit
 }
 /* Language settings */
-.lang-de .portlet h5, .lang-lb .portlet h5 {
-	text-transform: none;
-}
+.lang-als .portlet h5,
+.lang-ang .portlet h5,
+.lang-bar .portlet h5,
+.lang-de .portlet h5,
+.lang-frr .portlet h5,
+.lang-ksh .portlet h5,
+.lang-lb .portlet h5,
+.lang-nds .portlet h5,
+.lang-pdc .portlet h5,
+.lang-pfl .portlet h5,
+.lang-stq .portlet h5,
+.lang-vls .portlet h5 { text-transform: none /* some Germanic languages prefer no lowercases in portlet headers */ }
