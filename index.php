@@ -52,9 +52,8 @@ parse_str($_SERVER['QUERY_STRING'],$query);
 // Language
 $scriptLanguage = get('scriptlang', (($_COOKIE['languages']['script'] && preg_match( '/^[a-z-]+$/', $_COOKIE['languages']['script']))?$_COOKIE['languages']['script']:substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2)));
 
-if (getMessage('Title') === 'Title')
-{
-	$scriptLanguage='en';
+if (isset($messages[$scriptLanguage]) && isset($messages[$scriptLanguage]['ts-citegen-Title'])) {
+	$scriptLanguage='en'; // if title for generator is not set, don't show that language yet
 }
 
 $templateLanguage = get('citelang', (($_COOKIE['languages']['cite'] && preg_match( '/^[a-z-]+$/', $_COOKIE['languages']['cite']))?$_COOKIE['languages']['cite']:$scriptLanguage));
@@ -294,7 +293,7 @@ $selects['skins'] = createSelect('template', $availableSkins, array($template), 
 // Savant display
 $savant->availableParsers = array_keys($availableParsers);
 $savant->availableSettings = $availableSettings;
-$savant->availableLanguages = array_keys($messages);
+$savant->availableLanguages = prepareAvailableLanguages();
 $savant->settings = $settings;
 
 $savant->bookshelf = $bookshelf;

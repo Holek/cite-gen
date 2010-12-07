@@ -274,6 +274,22 @@ function prepareLanguageArray()
 }
 
 /**
+ * Prepares available languages to show
+ * @return array
+ */
+function prepareAvailableLanguages()
+{
+	global $messages;
+	$langAry = array();
+	foreach ($messages as $lang => $mess) {
+		if (isset($mess['ts-citegen-Title'])) {
+			$langAry[] = $lang;
+		}
+	}
+	return $langAry;
+}
+
+/**
  * Function for writing debug info from within various classes.
  * @param string $message
  */
