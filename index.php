@@ -242,15 +242,13 @@ foreach($newInputArray as $inputEntry)
 
 require_once( './includes/Savant3.php' );
 $gui = './gui';
-$savant = new Savant3(array(
-				'template_path' => $gui
-				));
+$savant = new Savant3(array('template_path' => $gui));
 
 
 // List available templates and check whether the one given exists
 $template = get('template', (($_COOKIE['template'] && preg_match( '/^[a-z-]+$/', $_COOKIE['template'])?$_COOKIE['template']:'monobook')));
 
-$dh = opendir('./gui');
+$dh = opendir($gui);
 $availableSkins = array();
 $isTemplate = false;
 $mimetype = null;
@@ -258,7 +256,7 @@ while(!is_bool($file = readdir($dh)))
 {
 	if(substr($file, -4) == ".ini")
 	{
-		$ini = parse_ini_file('./gui/'.$file);
+		$ini = parse_ini_file($gui.'/'.$file);
 
 		if (substr($file,0,-4) == $template)
 		{
