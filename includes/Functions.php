@@ -204,18 +204,18 @@ function areArticles(&$titles_array)
 {
 	if (count($titles_array))
 	{
-		global $error;
+		global $error,$mysqli;
 		
 		$authors_sql = '';
 		foreach ($titles_array as $title => $id)
 		{
-			$authors_sql .= ' OR `page_title` = "' . mysql_real_escape_string(str_replace(' ', '_', $title)) . '"';
+			$authors_sql .= ' OR `page_title` = "' . $mysqli->real_escape_string(str_replace(' ', '_', $title)) . '"';
 		}
 		$query = 'SELECT `page_title`  FROM page WHERE ('. substr($authors_sql,3) . ') AND `page_namespace` = 0;';
-		$result = mysql_query($query);
+		$result = $mysqli->query($query);
 		
 		$titles = array();
-		while ($row = mysql_fetch_row($result))
+		while ($row = $result->fetch_row())
 		{
 			$author = str_replace('_', ' ',$row[0]);
 			$titles[$author] = $titles_array[$author];
