@@ -227,7 +227,7 @@ document.onmousemove=positiontip
 <?php			endif; if (count($this->inputMessages)) : ?>
 				<span style="font-size:90%;"><ul><?php
 				foreach ($this->inputMessages as $inputMessage) : ?>
-					<li><?php $this->eprint$inputMessage(); ?></li>
+					<li><?php $this->eprint($inputMessage); ?></li>
 <?php				endforeach; ?></ul></span>
 <?php			endif; if (count($this->bookshelf)) : ?>
 				<h3><?php echo $this->lang['Sources-title']; ?></h3>
