@@ -225,9 +225,9 @@ document.onmousemove=positiontip
 				endforeach; ?></textarea>
 <?php			endif; if (count($this->inputMessages)) : ?>
 				<span style="font-size:90%;"><ul><?php
-				foreach ($this->inputMessages as $inputMessage) :
-					echo '<li>'.$inputMessage."</li>\n";
-				endforeach; ?></ul></span>
+				foreach ($this->inputMessages as $inputMessage) : ?>
+					<li><?php $this->eprint$inputMessage(); ?></li>
+<?php				endforeach; ?></ul></span>
 <?php			endif; if (count($this->bookshelf)) : ?>
 				<h3><?php echo $this->lang['Sources-title']; ?></h3>
 				<p><?php echo $this->lang['Sources-text']; ?></p>
