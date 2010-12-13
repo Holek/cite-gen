@@ -27,6 +27,7 @@ if ( $veryImportantMessage ) : ?>
 </style>
 <script type="text/javascript">
 //<![CDATA[
+var tiptext = '<?php echo str_replace($find,$repl,$this->lang['Output-select-disclaimer']); ?>';
 function onLoad()
 {
 	/************************
@@ -198,7 +199,7 @@ document.onmousemove=positiontip
 					<table><tbody>
 					<tr>
 						<td><label for="citelang"><?php echo $this->lang['Template-lang'];?></label></td>
-						<td><div onmouseover="ddrivetip('<?php echo str_replace($find,$repl,$this->lang['Output-select-disclaimer']); ?>',null, 300);" onmouseout="hideddrivetip()"><?php echo $this->selects['output']; ?></div></td>
+						<td><div onmouseover="ddrivetip(tiptext,null, 300);" onmouseout="hideddrivetip()"><?php echo $this->selects['output']; ?></div></td>
 					</tr>
 					<?php foreach ($this->availableSettings as $setting) : ?>
 					<tr>
