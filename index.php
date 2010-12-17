@@ -18,6 +18,9 @@ define('DEBUG',0);
 // Very important message, use only in emergencies!
 $veryImportantMessage = '';
 
+// Config - do not fail if file doesn't exist
+@include('./LocalSettings.php');
+
 $debug = '';
 require_once('./includes/Error.php');
 $error = new Error();
@@ -51,6 +54,12 @@ parse_str($_SERVER['QUERY_STRING'],$query);
 
 // Language
 $scriptLanguage = get('scriptlang', (($_COOKIE['languages']['script'] && preg_match( '/^[a-z-]+$/', $_COOKIE['languages']['script']))?$_COOKIE['languages']['script']:substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2)));
+
+$rootLanguage = false;
+if ( preg_match( '/^([a-z]+)-[a-z-]+$/', $scriptLanguage, $matches) ) {
+	$rootLanguage = $matches[1];
+	unset($matches);
+}
 
 if (isset($messages[$scriptLanguage]) && !isset($messages[$scriptLanguage]['ts-citegen-Title'])) {
 	$scriptLanguage='en'; // if title for generator is not set, don't show that language yet
