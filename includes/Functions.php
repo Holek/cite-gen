@@ -271,7 +271,8 @@ function prepareLanguageArray()
 		// strip "ts-citegen-" prefix from translation keys for templates
 		// length of ts-citegen- equals 11
 		// also doing magic for not fully translated languages in TranslateWiki
-		$langAry[substr($key, 11)] = ( ( $notEnglish && isset( $messages[$scriptLanguage][$key] ) ) ? $messages[$scriptLanguage][$key] : $message );
+		$key_short = substr($key, 11);
+		$langAry[$key_short] = getMessage($key_short);
 	}
 	return $langAry;
 }
