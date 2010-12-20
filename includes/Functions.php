@@ -237,13 +237,13 @@ function getMessage($id)
 	{
 		return $wgLanguageNames[$id];
 	}
-	else if (isset($messages[$scriptLanguage]) && (isset($messages[$scriptLanguage]['ts-citegen-'.$id]) || ($rootLanguage && isset($message[$rootLanguage]) && isset($message[$rootLanguage]['ts-citegen-'.$id])) || isset($messages['en']['ts-citegen-'.$id])))
+	else if (isset($messages[$scriptLanguage]) && (isset($messages[$scriptLanguage]['ts-citegen-'.$id]) || ($rootLanguage && isset($messages[$rootLanguage]) && isset($messages[$rootLanguage]['ts-citegen-'.$id])) || isset($messages['en']['ts-citegen-'.$id])))
 	{
 		$args = func_get_args();
 		array_shift($args);
 		$message = (isset($messages[$scriptLanguage]['ts-citegen-'.$id]) ? $messages[$scriptLanguage]['ts-citegen-'.$id] :
-				(($rootLanguage && isset($message[$rootLanguage]) && isset($message[$rootLanguage]['ts-citegen-'.$id]))
-				? $message[$rootLanguage]['ts-citegen-'.$id]
+				(($rootLanguage && isset($messages[$rootLanguage]) && isset($messages[$rootLanguage]['ts-citegen-'.$id]))
+				? $messages[$rootLanguage]['ts-citegen-'.$id]
 				: $messages['en']['ts-citegen-'.$id] ) );
 		if (count($args)) {
 			array_unshift($args, $message);
