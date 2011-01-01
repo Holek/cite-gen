@@ -236,7 +236,7 @@ function translateWithInterwiki($article,$lang) {
 	global $transSQL,$tl;
 	if (!isset($transSQL)) $transSQL = array();
 	if (!is_a($transSQL[$lang],'MySQLi')) {
-		$transSQL[$lang] = dbconnect($templateLanguage . 'wiki_p');
+		$transSQL[$lang] = dbconnect($lang . 'wiki_p');
 		$tl = $transSQL[$lang]->real_escape_string($templateLanguage);
 	}
 	$tarticle = $transSQL[$lang]->real_escape_string($article);
