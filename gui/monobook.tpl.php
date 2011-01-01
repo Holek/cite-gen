@@ -51,7 +51,7 @@ $self = str_replace('/','\/',$_SERVER['PHP_SELF']);
 					<?php foreach ($this->availableSettings as $setting) : ?>
 					<tr>
 						<td><label for="<?php echo $setting; ?>"><?php $this->eprint($this->lang['Option-'.$setting]); ?></label></td>
-						<td><input onchange="runMethod('<?php echo $setting; ?>');" name="s[<?php echo $setting; ?>]" id="<?php echo $setting; ?>" type="checkbox"<?php if ($this->settings[$setting] == true) echo ' checked="checked"'; ?> /></td>
+						<td><input name="s[<?php echo $setting; ?>]" id="<?php echo $setting; ?>" type="checkbox"<?php if ($this->settings[$setting] == true) echo ' checked="checked"'; ?> /></td>
 					</tr>
 					<?php endforeach; ?>
 					<tr>
@@ -135,6 +135,7 @@ $self = str_replace('/','\/',$_SERVER['PHP_SELF']);
 		</ul>
 	</div>
 </div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script type="text/javascript">
 var tiptext = '<?php echo str_replace($find,$repl,$this->lang['Output-select-disclaimer']); ?>';
 /************************
@@ -142,18 +143,15 @@ var tiptext = '<?php echo str_replace($find,$repl,$this->lang['Output-select-dis
 ************************/
 var sidebar = '';
 if( window.sidebar && window.sidebar.addPanel ) {
-	sidebar = '<a href="javascript:window.sidebar.addPanel( \'<?php echo $encodedTitle; ?>\', \'http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar\', \'\' );"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Firefox']); ?><\/a>' ;
+  sidebar = '<a href="javascript:window.sidebar.addPanel( \'<?php echo $encodedTitle; ?>\', \'http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar\', \'\' );"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Firefox']); ?><\/a>' ;
 } else if( window.opera && window.print ) {
-	sidebar = '<a title="<?php echo $encodedTitle; ?>" rel="sidebar" href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Opera']); ?><\/a>' ;
+  sidebar = '<a title="<?php echo $encodedTitle; ?>" rel="sidebar" href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Opera']); ?><\/a>' ;
 } else if( window.ActiveXObject && navigator.platform.indexOf('Mac') + 1 && !navigator.__ice_version && ( !window.ScriptEngine || ScriptEngine().indexOf('InScript') == -1 ) ) {
-	sidebar = '<a href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar" onclick="window.alert(\'<?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac-details']);?>\');" target="_blank"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac']); ?><\/a>' ;
+  sidebar = '<a href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar" onclick="window.alert(\'<?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac-details']);?>\');" target="_blank"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac']); ?><\/a>' ;
 }
 
-var tools = document.getElementById('tools-portlet');
-if (tools && sidebar != '') {
-	sidebarLi = document.createElement('li');
-	sidebarLi.innerHTML = sidebar;
-	tools.appendChild(sidebarLi);
+if (sidebar != '') {
+  $('#tools-portlet').append($('<li/>').html(sidebar));
 }
 
 offsetxpoint=20 //Customize x offset of tooltip
@@ -165,57 +163,59 @@ if (ie||ns6)
 tipobj=document.all? document.all["dhtmltooltip"] : document.getElementById? document.getElementById("dhtmltooltip") : ""
 
 
-cl=document.getElementById('citelang');
-cl.onmouseover=ddrivetip(tiptext,null, 300);
-cl.onmouseout=hideddrivetip();
+$('#citelang').hover(function () {
+ddrivetip(tiptext,null, 300);
+}, function () {
+hideddrivetip();
+})
 
-function runMethod(checkbox)
-{
-	var output = document.getElementById('output');
-	switch (checkbox)
-	{
-		case 'add-list':
-			if (document.getElementById('add-list').checked==false) {
-				if (document.getElementById('add-references').checked == true) {
-					output.value = output.value.replace(/\* <ref/g, '<ref');
-				}
-				else {
-					output.value = output.value.replace(/\* \{\{/g, '{{');
-				}
-			}
-			else {
-				if (document.getElementById('add-references').checked == true) {
-					output.value = output.value.replace(/<ref/g, '* <ref');
-				}
-				else {
-					output.value = output.value.replace(/\{\{/g, '* {{');
-				}
-			}
-		break;
-		case 'add-references':
-			if (document.getElementById('add-references').checked==false) {
-				outputText = output.value.replace(/<ref(| name="(.*?)")>/g, '');
-				outputText = outputText.replace(/<\/ref>/g, '');
-				output.value = outputText;
-			}
-			else {
-				outputText = output.value.replace(/\{\{/g, '<ref>{{');
-				outputText = outputText.replace(/\}\}/g, '}}</ref>');
-				output.value = outputText;
-			}
-			break;
-		case 'append-newlines':
-			if (document.getElementById('append-newlines').checked==false) {
-				output.value = output.value.replace(/\n\| /g, ' | ');
-			}
-			else {
-				output.value = output.value.replace(/ \| /g, "\n| ");
-			}
-			break;
-		default:
-		break;
-	}
-}
+$('input:checkbox').change(function () {
+  var output = document.getElementById('output');
+  if ( output )
+  switch (this.id)
+  {
+    case 'add-list':
+      if (document.getElementById('add-list').checked==false) {
+        if (document.getElementById('add-references').checked == true) {
+          output.value = output.value.replace(/\* <ref/g, '<ref');
+        }
+        else {
+          output.value = output.value.replace(/\* \{\{/g, '{{');
+        }
+      }
+      else {
+        if (document.getElementById('add-references').checked == true) {
+          output.value = output.value.replace(/<ref/g, '* <ref');
+        }
+        else {
+          output.value = output.value.replace(/\{\{/g, '* {{');
+        }
+      }
+    break;
+    case 'add-references':
+      if (document.getElementById('add-references').checked==false) {
+        outputText = output.value.replace(/<ref(| name="(.*?)")>/g, '');
+        outputText = outputText.replace(/<\/ref>/g, '');
+        output.value = outputText;
+      }
+      else {
+        outputText = output.value.replace(/\{\{/g, '<ref>{{');
+        outputText = outputText.replace(/\}\}/g, '}}</ref>');
+        output.value = outputText;
+      }
+      break;
+    case 'append-newlines':
+      if (document.getElementById('append-newlines').checked==false) {
+        output.value = output.value.replace(/\n\| /g, ' | ');
+      }
+      else {
+        output.value = output.value.replace(/ \| /g, "\n| ");
+      }
+      break;
+    default:
+    break;
+  }
+});
 
 /***********************************************
 * Cool DHTML tooltip script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
@@ -274,6 +274,58 @@ tipobj.style.width='';
 }
 
 document.onmousemove=positiontip;
+
+// submitting with no parsers selected when there are ISBN in the input fields
+$('form').submit(function () {
+  var isbns = false
+    , texts = $('input[type=text]')
+    , tl = texts.length
+    , sel = $(':selected', '#ISBN')
+    ;
+  if (sel.length == 0) {
+    for (var i = 0; i < tl && !isbns; i++) {
+      var val = texts[i].value.replace('-','').replace('x','X');
+      if (val.length == 10) {
+        isbns = (
+          (((Number(val[0]))    //  (1 * x1
+          +(2*Number(val[1])) // + 2 * x2
+          +(3*Number(val[2])) // + 3 * x3
+          +(4*Number(val[3])) // + ...
+          +(5*Number(val[4]))
+          +(6*Number(val[5]))
+          +(7*Number(val[6]))
+          +(8*Number(val[7])) // + ...
+          +(9*Number(val[8])) // + 9 * x9)
+            )%11) ==                // mod 11 == x10
+            ((val[9]=='X')?10:Number(val[9]))
+          );
+      } else if ( val.length == 13 ) {
+        isbns = (((10-           // (10 -
+          ((Number(val[0]))      //  (1 * x1
+          +(3*Number(val[1]))  // + 3 * x2
+          +(  Number(val[2]))  // + 1 * x3
+          +(3*Number(val[3]))  // + ...
+          +(  Number(val[4]))
+          +(3*Number(val[5]))
+          +(  Number(val[6]))
+          +(3*Number(val[7]))  // + ...
+          +(  Number(val[8]))  // + 1 * x9
+          +(3*Number(val[9]))  // + 3 * x10
+          +(  Number(val[10])) // + 1 * x11
+          +(3*Number(val[11])) // + 3 * x12)
+          )%10))%10               // mod 10) == x13 // 0 replaces 10
+          == Number(val[12]));
+      }
+    }
+    // select all if none is checked and ISBNs are present
+    if ( isbns ) {
+      $('option', '#ISBN').each(function(i) {
+        this.selected = true;
+      })
+    }
+  }
+  return true; // no matter what, submit
+});
 </script>
 </body>
 </html>
