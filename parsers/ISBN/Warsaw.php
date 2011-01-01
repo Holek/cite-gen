@@ -178,17 +178,17 @@ class Warsaw extends Parser {
 		// Here you can also sort which fields are meant to be shown first
 		// at the generated template. Simply the first one goes first. ;)
 		return array(
-						'__names' => Array(
-										'last' => $this->lastNames,
-										'first' => $this->firstNames
-									),
-						'title' => $this->title,
-						'date' => $this->date,
-						'publisher' => $this->publisher,
-						'location' => $this->place,
-						'isbn' => $this->ISBN,
-						'__sourceurl' => $this->source // The only non-existant in {{Cite book}} field. Consists of source URL where the info was taken from
-					);
+			'__names' => array(
+					'last' => $this->lastNames,
+					'first' => $this->firstNames
+				),
+			'title' => $this->title,
+			'date' => $this->date,
+			'publisher' => $this->publisher,
+			'location' => translateWithInterwiki($this->place,'pl'),
+			'isbn' => $this->ISBN,
+			'__sourceurl' => $this->source
+		);
 	}
 
     /**

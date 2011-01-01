@@ -104,17 +104,17 @@ class Congress extends Parser {
 		// Here you can also sort which fields are meant to be shown first
 		// at the generated template. Simply the first one goes first. ;)
 		return array(
-						'__names' => Array(
-										'last' => $this->lastNames,
-										'first' => $this->firstNames
-									),
-						'title' => $this->title,
-						'date' => $this->date,
-						'publisher' => $this->publisher,
-						'location' => $this->place,
-						'isbn' => $this->ISBN,
-						'__sourceurl' => $this->source,
-					);
+			'__names' => array(
+					'last' => $this->lastNames,
+					'first' => $this->firstNames
+				),
+			'title' => $this->title,
+			'date' => $this->date,
+			'publisher' => $this->publisher,
+			'location' => translateWithInterwiki($this->place,'en'),
+			'isbn' => $this->ISBN,
+			'__sourceurl' => $this->source
+		);
 	}
 
     /**

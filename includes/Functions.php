@@ -226,6 +226,51 @@ function areArticles(&$titles_array)
 }
 
 /**
+ * Translates a page name from one language to another using interwiki links.
+ * @param string $article
+ * @return string
+ */
+function translateWithInterwiki($article,$lang) {
+	global $templateLanguage;
+	if ($templateLanguage == $lang) return $article;
+	global $transSQL,$tl;
+	if (!isset($transSQL)) $transSQL = array();
+	if (!is_a($transSQL[$lang],'MySQLi')) {
+		$transSQL[$lang] = dbconnect($templateLanguage . 'wiki_p');
+		$tl = $transSQL[$lang]->real_escape_string($templateLanguage);
+	}
+	$tarticle = $transSQL[$lang]->real_escape_string($article);
+	$sql = <<<SQL
+SELECT ll1.ll_title AS trans1, ll2.ll_title AS trans2 FROM page AS p1
+  LEFT JOIN pagelinks
+    ON p1.page_is_redirect = 1
+      AND pl_from = p1.page_id
+    LEFT JOIN page AS p2
+      ON pl_namespace = 0
+        AND pl_namespace = p2.page_namespace
+        AND pl_title = p2.page_title
+      LEFT JOIN langlinks AS ll1
+        ON ll1.ll_from = p1.page_id
+        AND ll1.ll_lang = "{$tl}"
+        LEFT JOIN langlinks AS ll2
+          ON ll2.ll_from = p2.page_id
+          AND ll2.ll_lang = "{$tl}"
+  WHERE p1.page_namespace = 0
+    AND p1.page_title = "{$tarticle}"
+SQL;
+	$res = $transSQL[$lang]->query($sql);
+	$row = $res->fetch_assoc();
+	if (is_null($row)) {
+		return $article;
+	} else if (isset($row['trans1'])) {
+		return $row['trans1'];
+	} else if (isset($row['trans2'])) {
+		return $row['trans2'];
+	}
+	return $article;
+}
+
+/**
  * I18N message getter.
  * @param string $id
  * @return string

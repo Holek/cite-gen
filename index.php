@@ -111,7 +111,7 @@ foreach ($query['s'] as $setting => $value)
 include('database.php');
 if ($settings['append-author-link'] == true)
 {
-	dbconnect($templateLanguage.'wiki-p');
+	$mysqli = dbconnect($templateLanguage.'wiki-p');
 }
 
 ////////////////////

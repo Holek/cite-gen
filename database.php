@@ -12,7 +12,7 @@ if (!defined('DATABASE_LINK'))
  */
 function dbconnect($database)
 {
-	global $error,$mysqli;
+	global $error;
 	// fix redundant error-reporting
 	$errorlevel = ini_set('error_reporting','0');
  
@@ -29,5 +29,7 @@ function dbconnect($database)
  
 	// restore error-reporting
 	ini_set('error_reporting',$errorlevel);
+	
+	return $mysqli;
 }
 
