@@ -86,6 +86,8 @@ td {
 	width: 155px;
 	overflow: visible;
 }
+#dhtmltooltip{position:absolute;width:150px;border:2px solid black;padding:2px;background-color:lightyellow;visibility:hidden;z-index:100}
+#veryImportantMessage{margin:10px 0 5px;border:3px dashed #F88;background-color:#FFE0EB;padding:5px 10px}
 #parsersContent {
 	display: block;
 	border: 1px solid #aaa;

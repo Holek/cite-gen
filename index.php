@@ -322,10 +322,7 @@ $savant->selects = $selects;
 
 $savant->veryImportantMessage = $veryImportantMessage;
 $savant->debug = ((DEBUG)?$debug:'');
-if (is_null($mimetype)) {
-	include ('./includes/htmlize.php'); // HTML mimetypes
-	$savant->docstart = $docstart;
-} else {
+if (isset($mimetype)) {
 	header('Content-Type: '.$mimetype.';charset=UTF-8');
 }
 $savant->direction = ((in_array($scriptLanguage,$rtlLanguages))?'rtl':'ltr');

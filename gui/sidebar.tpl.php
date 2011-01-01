@@ -1,11 +1,10 @@
-<?php echo $this->docstart; ?>
+<!doctype html>
 <head>
 	<title><?php echo $this->lang['Sidebar-title']; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta content="Michal Poltyn" name="author" />
 	<link rel="icon" type="image/png" href="gui/monobook/favicon.png" />
 	<script type="text/javascript">
-		//<![CDATA[
 		function runMethod(checkbox)
 		{
 			switch (checkbox)
@@ -52,10 +51,8 @@
 				break;
 			}
 		}
-		//]]>
 	</script>
 	<style type="text/css">
-	/* <![CDATA[*/
 		html {
 			background: #f9f9f9 url(gui/monobook/headbg.jpg) 0 0 no-repeat;
 			color: black;
@@ -90,7 +87,6 @@
 		ul { line-height: 1.5em; list-style-type: square; list-style-image: url(gui/monobook/bullet.gif); font-size: 95%; padding-left:2em; margin:0.3em; }
 		li { padding: 0; margin: 0;}
 		label { font-size: 85%; }
-	/* ]]> */
 	</style>
 </head>
 <body>

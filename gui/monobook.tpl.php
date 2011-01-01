@@ -1,9 +1,10 @@
-<?php echo $this->docstart;
+<?php
 $find = array('\\',  "'" );
 $repl = array('\\\\',"\'");
 $encodedTitle = str_replace($find,$repl,$this->lang['Sidebar-title']);
 $self = str_replace('/','\/',$_SERVER['PHP_SELF']);
 ?>
+<!doctype html>
 <head>
 	<title><?php echo $this->lang['Title']; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -15,52 +16,158 @@ $self = str_replace('/','\/',$_SERVER['PHP_SELF']);
 	<!--[if IE 5.5000]><style type="text/css">@import "gui/monobook/fixes/IE55Fixes.css";</style><![endif]-->
 	<!--[if IE 6]><style type="text/css">@import "gui/monobook/fixes/IE60Fixes.css";</style><![endif]-->
 	<!--[if IE 7]><style type="text/css">@import "gui/monobook/fixes/IE70Fixes.css";</style><![endif]-->
-<style type="text/css">
-/* <![CDATA[ */
-#dhtmltooltip{position:absolute;width:150px;border:2px solid black;padding:2px;background-color:lightyellow;visibility:hidden;z-index:100}
-<?php 
-$veryImportantMessage = (bool)(isset($this->veryImportantMessage) && trim($this->veryImportantMessage));
-if ( $veryImportantMessage ) : ?>
-#veryImportantMessage{margin:10px 0 5px;border:3px dashed #F88;background-color:#FFE0EB;padding:5px 10px}
-<?php endif; ?>
-/* ]]> */
-</style>
-<script type="text/javascript">
-//<![CDATA[
-var tiptext = '<?php echo str_replace($find,$repl,$this->lang['Output-select-disclaimer']); ?>';
-function onLoad()
-{
-	/************************
-	     Sidebar panels
-	************************/
-	var sidebar = '';
-	if( window.sidebar && window.sidebar.addPanel ) {
-		//Gecko; use JavaScript to add the sidebar panel
-		sidebar = '<a href="javascript:window.sidebar.addPanel( \'<?php echo $encodedTitle; ?>\', \'http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar\', \'\' );"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Firefox']); ?><\/a>' ;
-	} else if( window.opera && window.print ) {
-		//Opera 6+; use a regular link with the rel attribute set to 'sidebar' and a title to create a Hotlist panel
-		sidebar = '<a title="<?php echo $encodedTitle; ?>" rel="sidebar" href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Opera']); ?><\/a>' ;
-	} else if( window.ActiveXObject && navigator.platform.indexOf('Mac') + 1 && !navigator.__ice_version && ( !window.ScriptEngine || ScriptEngine().indexOf('InScript') == -1 ) ) {
-		//IE 4+ (Mac); the page can be manually added to the Page Holder - open the page for them to add it
-		// $this->lang['Sidebar-add-IE-Mac-details'] = 
-		sidebar = '<a href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar" onclick="window.alert(\'<?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac-details']);?>\');" target="_blank"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac']); ?><\/a>' ;
-	}
-	
-	var tools = document.getElementById('tools-portlet');
-	if (tools && sidebar != '') {
-		sidebarLi = document.createElement('li');
-		sidebarLi.innerHTML = sidebar;
-		tools.appendChild(sidebarLi);
-	}
+</head>
 
-	offsetxpoint=-60 //Customize x offset of tooltip
-	offsetypoint=20 //Customize y offset of tooltip
-	ie=document.all
-	ns6=document.getElementById && !document.all
-	enabletip=false
-	if (ie||ns6)
-	tipobj=document.all? document.all["dhtmltooltip"] : document.getElementById? document.getElementById("dhtmltooltip") : ""
+<body style="direction: <?php echo $this->direction; ?>;" class="mediawiki ns--1 <?php echo $this->direction; ?>"> 
+<div id="dhtmltooltip"></div>
+<div id="globalWrapper">
+	<div id="column-content">
+		<div id="content"><a id="top"></a>
+<?php if ($veryImportantMessage) : ?> 
+			<div id="veryImportantMessage"><?php echo $this->veryImportantMessage; ?></div>
+<?php endif; ?>
+			<h1 class="firstHeading"><?php echo $this->lang['Title']; ?></h1>
+			<div id="bodyContent">
+				<h2><?php echo $this->lang['Input-title']; ?></h2>
+				<p>
+					<?php printf($this->lang['Input-text'], implode(', ',$this->availableParsers)); ?>
+				</p>
+				<form action="redirect.php" method="get">
+					<p>
+					<?php for ($i=0;$i<6;$i++) : ?>
+					<input name="input[]" value="<?php $this->eprint($this->input[$i]); ?>" type="text" />
+					<?php endfor; ?></p>
+					<div id="parsersContent">
+					<h4><?php echo $this->lang['Parsers'];?></h4>
+					<?php foreach ($this->selects['parsers'] as $parser => $select) : ?>
+					<label for="<?php echo $parser;?>"><?php echo $parser;?></label>
+					<?php echo $select; ?><br/>
+					<?php endforeach; ?></div>
+					<table><tbody>
+					<tr>
+						<td><label for="citelang"><?php echo $this->lang['Template-lang'];?></label></td>
+						<td><?php echo $this->selects['output']; ?></td>
+					</tr>
+					<?php foreach ($this->availableSettings as $setting) : ?>
+					<tr>
+						<td><label for="<?php echo $setting; ?>"><?php $this->eprint($this->lang['Option-'.$setting]); ?></label></td>
+						<td><input onchange="runMethod('<?php echo $setting; ?>');" name="s[<?php echo $setting; ?>]" id="<?php echo $setting; ?>" type="checkbox"<?php if ($this->settings[$setting] == true) echo ' checked="checked"'; ?> /></td>
+					</tr>
+					<?php endforeach; ?>
+					<tr>
+						<td><label for="template"><?php echo $this->lang['Skins'];?></label></td>
+						<td><?php echo $this->selects['skins']; ?></td>
+					</tr>
+					<tr>
+						<td/>
+						<td><input type="submit" value="<?php $this->eprint($this->lang['Send']); ?>" /></td>
+					</tr>
+					</tbody></table>
+				</form>
+<?php           if (count($this->input) || (count($this->inputMessages) && count($this->bookshelf))) : ?>
+				<h2><?php echo $this->lang['Output-title']; ?></h2>
+<?php			if (count($this->bookshelf)) : ?>
+				<textarea style="width:100%;" rows="16" cols="30" id="output"><?php
+				foreach ($this->bookshelf as $book) :
+					echo $this->eprint($book)."\n";
+				endforeach; ?></textarea>
+<?php			endif; if (count($this->inputMessages)) : ?>
+				<span style="font-size:90%;"><ul><?php
+				foreach ($this->inputMessages as $inputMessage) : ?>
+					<li><?php $this->eprint($inputMessage); ?></li>
+<?php				endforeach; ?></ul></span>
+<?php			endif; if (count($this->bookshelf)) : ?>
+				<h3><?php echo $this->lang['Sources-title']; ?></h3>
+				<p><?php echo $this->lang['Sources-text']; ?></p>
+				<ul>
+				<?php
+				foreach ($this->sources as $source) : ?>
+					<li><a href="<?php $this->eprint($source[0]); ?>" target="_blank"><?php $this->eprint($source[1]); ?></a> (<?php $this->eprint($source[2]['parser'].' '.$source[2]['data']); ?>)</li>
+<?php			endforeach; ?>
+				</ul>
+<?php			endif;
+				endif;
+				if (count($this->errors)) : ?>
+				<h3><?php echo $this->lang['Errors-title']; ?></h3>
+				<ul><?php
+				foreach ($this->errors as $error) :
+					echo '<li>'.$error."</li>\n";
+				endforeach; ?></ul>
+<?php           endif; ?>
+<?php           if (strlen($this->debug)) : ?>
+				<h2>Debug</h2>
+				<pre><?php $this->eprint($this->debug); ?></pre>
+<?php           endif; ?>
+			</div>
+		</div>
+	</div>
+	<div id="logo">
+		<img src="gui/monobook/wiki.png" alt="Logo" />
+	</div>
+	<div class="portlet">
+		<h5><?php echo $this->lang['Tools']; ?></h5>
+		<div class="pBody">
+			<ul id="tools-portlet">
+				<?php $url = $_SERVER['SCRIPT_NAME']; ?>
+				<li><a href="<?php echo $url.((count($this->query))?'?'. htmlentities (http_build_query($this->query)):'');?>"><?php echo $this->lang['Save-it'];?></a></li>
+			</ul>
+		</div>
+		<h5><?php echo $this->lang['Other-languages']; ?></h5>
+		<div class="pBody">
+			<ul>
+				<?php 
+				foreach ($this->availableLanguages as $lang) :
+					$this->query['scriptlang'] = $lang;
+					echo '<li><a href="'. $url .((count($this->query))?'?'.htmlentities(http_build_query($this->query)):'').'">'.$this->languages[$lang].'</a></li>';
+				endforeach;
+				 ?>
+			</ul>
+		</div>
+	</div>
+	<div class="visualClear"/>
+	<div id="footer">
+		<div id="f-poweredbyico"><a href="/"><img src="http://upload.wikimedia.org/wikipedia/commons/0/0f/Wikimedia-toolserver-button.png" alt="Powered by the Toolserver"/></a></div>
+		<div id="f-copyrightico"><a href="/~holek/"><img src="/~holek/holekproject.png" alt="A Holek project"/></a></div>
+		<ul>
+			<li><a href="https://github.com/Holek/cite-gen">Source of the generator</a>.</li>
+			<li>A series of tools by: <a href="http://mike.poltyn.com/">Mike "Hołek" Połtyn</a></li>
+			<li>Wiki: <a href="http://pl.wikipedia.org/wiki/Dyskusja_wikipedysty:Holek">user talk</a></li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+var tiptext = '<?php echo str_replace($find,$repl,$this->lang['Output-select-disclaimer']); ?>';
+/************************
+     Sidebar panels
+************************/
+var sidebar = '';
+if( window.sidebar && window.sidebar.addPanel ) {
+	sidebar = '<a href="javascript:window.sidebar.addPanel( \'<?php echo $encodedTitle; ?>\', \'http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar\', \'\' );"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Firefox']); ?><\/a>' ;
+} else if( window.opera && window.print ) {
+	sidebar = '<a title="<?php echo $encodedTitle; ?>" rel="sidebar" href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-Opera']); ?><\/a>' ;
+} else if( window.ActiveXObject && navigator.platform.indexOf('Mac') + 1 && !navigator.__ice_version && ( !window.ScriptEngine || ScriptEngine().indexOf('InScript') == -1 ) ) {
+	sidebar = '<a href="http:\/\/toolserver.org<?php echo $self; ?>?template=sidebar" onclick="window.alert(\'<?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac-details']);?>\');" target="_blank"><?php echo str_replace($find,$repl,$this->lang['Sidebar-add-IE-Mac']); ?><\/a>' ;
 }
+
+var tools = document.getElementById('tools-portlet');
+if (tools && sidebar != '') {
+	sidebarLi = document.createElement('li');
+	sidebarLi.innerHTML = sidebar;
+	tools.appendChild(sidebarLi);
+}
+
+offsetxpoint=20 //Customize x offset of tooltip
+offsetypoint=20 //Customize y offset of tooltip
+ie=document.all
+ns6=document.getElementById && !document.all
+enabletip=false
+if (ie||ns6)
+tipobj=document.all? document.all["dhtmltooltip"] : document.getElementById? document.getElementById("dhtmltooltip") : ""
+
+
+cl=document.getElementById('citelang');
+cl.onmouseover=ddrivetip(tiptext,null, 300);
+cl.onmouseout=hideddrivetip();
 
 function runMethod(checkbox)
 {
@@ -158,137 +265,15 @@ tipobj.style.visibility="visible"
 
 function hideddrivetip(){
 if (ns6||ie){
-enabletip=false
-tipobj.style.visibility="hidden"
-tipobj.style.left="-1000px"
-tipobj.style.backgroundColor=''
-tipobj.style.width=''
+enabletip=false;
+tipobj.style.visibility="hidden";
+tipobj.style.left="-1000px";
+tipobj.style.backgroundColor='';
+tipobj.style.width='';
 }
 }
 
-document.onmousemove=positiontip
-//]]>
+document.onmousemove=positiontip;
 </script>
-</head>
-
-<body style="direction: <?php echo $this->direction; ?>;" class="mediawiki ns--1 <?php echo $this->direction; ?>" onload="onLoad();"> 
-<div id="dhtmltooltip"></div>
-<div id="globalWrapper">
-	<div id="column-content">
-		<div id="content"><a id="top"></a>
-<?php if ($veryImportantMessage) : ?> 
-			<div id="veryImportantMessage"><?php echo $this->veryImportantMessage; ?></div>
-<?php endif; ?>
-			<h1 class="firstHeading"><?php echo $this->lang['Title']; ?></h1>
-			<div id="bodyContent">
-				<h2><?php echo $this->lang['Input-title']; ?></h2>
-				<p>
-					<?php printf($this->lang['Input-text'], implode(', ',$this->availableParsers)); ?>
-				</p>
-				<form action="redirect.php" method="get">
-					<p>
-					<?php for ($i=0;$i<6;$i++) : ?>
-					<input name="input[]" value="<?php $this->eprint($this->input[$i]); ?>" type="text" />
-					<?php endfor; ?></p>
-					<div id="parsersContent">
-					<h4><?php echo $this->lang['Parsers'];?></h4>
-					<?php foreach ($this->selects['parsers'] as $parser => $select) : ?>
-					<label for="<?php echo $parser;?>"><?php echo $parser;?></label>
-					<?php echo $select; ?><br/>
-					<?php endforeach; ?></div>
-					<table><tbody>
-					<tr>
-						<td><label for="citelang"><?php echo $this->lang['Template-lang'];?></label></td>
-						<td><div onmouseover="ddrivetip(tiptext,null, 300);" onmouseout="hideddrivetip()"><?php echo $this->selects['output']; ?></div></td>
-					</tr>
-					<?php foreach ($this->availableSettings as $setting) : ?>
-					<tr>
-						<td><label for="<?php echo $setting; ?>"><?php $this->eprint($this->lang['Option-'.$setting]); ?></label></td>
-						<td><input onchange="runMethod('<?php echo $setting; ?>');" name="s[<?php echo $setting; ?>]" id="<?php echo $setting; ?>" type="checkbox"<?php if ($this->settings[$setting] == true) echo ' checked="checked"'; ?> /></td>
-					</tr>
-					<?php endforeach; ?>
-					<tr>
-						<td><label for="template"><?php echo $this->lang['Skins'];?></label></td>
-						<td><?php echo $this->selects['skins']; ?></td>
-					</tr>
-					<tr>
-						<td/>
-						<td><input type="submit" value="<?php $this->eprint($this->lang['Send']); ?>" /></td>
-					</tr>
-					</tbody></table>
-				</form>
-<?php           if (count($this->input) || (count($this->inputMessages) && count($this->bookshelf))) : ?>
-				<h2><?php echo $this->lang['Output-title']; ?></h2>
-<?php			if (count($this->bookshelf)) : ?>
-				<textarea style="width:100%;" rows="16" cols="30" id="output"><?php
-				foreach ($this->bookshelf as $book) :
-					echo $this->eprint($book)."\n";
-				endforeach; ?></textarea>
-<?php			endif; if (count($this->inputMessages)) : ?>
-				<span style="font-size:90%;"><ul><?php
-				foreach ($this->inputMessages as $inputMessage) : ?>
-					<li><?php $this->eprint($inputMessage); ?></li>
-<?php				endforeach; ?></ul></span>
-<?php			endif; if (count($this->bookshelf)) : ?>
-				<h3><?php echo $this->lang['Sources-title']; ?></h3>
-				<p><?php echo $this->lang['Sources-text']; ?></p>
-				<ul>
-				<?php
-				foreach ($this->sources as $source) : ?>
-					<li><a href="<?php $this->eprint($source[0]); ?>" target="_blank"><?php $this->eprint($source[1]); ?></a> (<?php $this->eprint($source[2]['parser'].' '.$source[2]['data']); ?>)</li>
-<?php			endforeach; ?>
-				</ul>
-<?php			endif;
-				endif;
-				if (count($this->errors)) : ?>
-				<h3><?php echo $this->lang['Errors-title']; ?></h3>
-				<ul><?php
-				foreach ($this->errors as $error) :
-					echo '<li>'.$error."</li>\n";
-				endforeach; ?></ul>
-<?php           endif; ?>
-<?php           if (strlen($this->debug)) : ?>
-				<h2>Debug</h2>
-				<pre><?php $this->eprint($this->debug); ?></pre>
-<?php           endif; ?>
-			</div>
-		</div>
-	</div>
-	<div id="logo">
-		<img src="gui/monobook/wiki.png" alt="Logo" />
-	</div>
-	<div class="portlet">
-		<h5><?php echo $this->lang['Tools']; ?></h5>
-		<div class="pBody">
-			<ul id="tools-portlet">
-				<?php $url = $_SERVER['SCRIPT_NAME']; ?>
-				<li><a href="<?php echo $url.((count($this->query))?'?'. htmlentities (http_build_query($this->query)):'');?>"><?php echo $this->lang['Save-it'];?></a></li>
-			</ul>
-		</div>
-		<h5><?php echo $this->lang['Other-languages']; ?></h5>
-		<div class="pBody">
-			<ul>
-				<?php 
-				foreach ($this->availableLanguages as $lang) :
-					$this->query['scriptlang'] = $lang;
-					echo '<li><a href="'. $url .((count($this->query))?'?'.htmlentities(http_build_query($this->query)):'').'">'.$this->languages[$lang].'</a></li>';
-				endforeach;
-				 ?>
-			</ul>
-		</div>
-	</div>
-	<div class="visualClear"/>
-	<div id="footer">
-		<div id="f-poweredbyico"><a href="/"><img src="http://upload.wikimedia.org/wikipedia/commons/0/0f/Wikimedia-toolserver-button.png" alt="Powered by the Toolserver"/></a></div>
-		<div id="f-copyrightico"><a href="/~holek/"><img src="/~holek/holekproject.png" alt="A Holek project"/></a></div>
-		<ul>
-			<li><a href="https://github.com/Holek/cite-gen">Source of the generator</a>.</li>
-			<li>A series of tools by: <a href="http://mike.poltyn.com/">Mike "Hołek" Połtyn</a></li>
-			<li>XMMP: <tt>hołek@jabber.wroc.pl</tt></li>
-			<li>Wiki: <a href="http://pl.wikipedia.org/wiki/Dyskusja_wikipedysty:Holek">user talk</a></li>
-			<li>E-mail: <a href="http://pl.wikipedia.org/wiki/Specjalna:E-mail/Holek">via wiki</a></li>
-		</ul>
-	</div>
-</div>
 </body>
 </html>
