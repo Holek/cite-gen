@@ -1,4 +1,5 @@
 <!doctype html>
+<html lang="<?php echo $this->scriptLanguage; ?>" class="lang-<?php echo $this->scriptLanguage; ?>">
 <head>
 	<title><?php echo $this->lang['Sidebar-title']; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
