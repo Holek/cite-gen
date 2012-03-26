@@ -54,10 +54,14 @@ class ISBN_parser extends InputCheck {
 				$availableParsers[getMessage($ini['summary']['main_language'])][] = array('value'=>substr($file,0,-4),'label'=>$parserTitle);
 				
 				if ($ini['summary']['main_language'] == $templateLanguage || $ini['summary']['main_language'] == 'International') {
-					$defaultParsers = array_unshift( $defaultParsers, substr($file,0,-4) );
+					array_unshift( $defaultParsers, substr($file,0,-4) );
 				}
-				else if (in_array($templateLanguage, createArray($ini['summary']['also_in']))) {
-					$defaultParsers[] = substr($file,0,-4);
+				else {
+					if (isset($ini['summary']['also_in'])) {
+						if (in_array($templateLanguage, createArray($ini['summary']['also_in']))) {
+							$defaultParsers[] = substr($file,0,-4);
+						}
+					}
 				}
 				unset($ini,$parserTitle);
 			}
