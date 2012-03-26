@@ -32,6 +32,7 @@ class Nukat extends Parser {
      */
 	public function __construct($ISBN)
 	{
+		global $debug;
 		$ini = parse_ini_file('./parsers/ISBN/Nukat.ini');
 		$u1 = ((strlen($ISBN)==13)?'6000':'7');
 		$data = @file_get_contents($address = $ini['url'].'?search=KEYWORD&function=CARDSCR&pos=1&u1='.$u1.'&t1='.$ISBN);
@@ -41,30 +42,38 @@ class Nukat extends Parser {
 		}
 		if (strpos($data, 'Brak wyników wyszukiwania') === false)
 		{
-			$data = explode('<form name="searchdata">', $data);
-			$data = explode("\n</form>", $data[1]);
-			$data = explode("\n", $data[0]);
 			$array = array();
-			foreach ($data as $line)
-			{
-				preg_match('/name="(.*?)" value="(.*?)" \/>$/', $line, $temp);
-				$array[$temp[1]] = $temp[2];
-			}
-			
-			$this->title = str_replace('/', '', $array['title']) . ' ' . substr($array['subtitle'],0,-2);
+			preg_match_all(',
+    <tr>
+      
+      <th align="center" valign="top" width="20%" >
+        (.*?)
+      </th>
+      <td >
+        (.*?)
+      </td>
+       
+    </tr>,m', $data, $temp);
 
-			preg_match('/(.*?), (.*?)$/', $array['author'], $author);
+			for ($i = 0; $i < count( $temp[1] ); $i ++) {
+				$array[ mb_strtolower($temp[1][$i]) ] = trim(preg_replace( array(
+					'@<a[^>]*?>@siu', '@</a>@siu'), '', $temp[2][$i]
+				));
+			}
+			$debug .= var_export($array, TRUE);
+			
+			$this->title = preg_replace('#/.*$#', '', $array['tytuł']);
+
+			preg_match('#(.*?), (.*?) \(#', $array['autor'], $author);
 			$this->lastNames[] = $author[1];
 			$this->firstNames[] = $author[2];
 
-			preg_match('/(\d+)/',$array['publication_date'],$date);
-			$this->date = $date[1];
+			preg_match('#(.*?) +: +(.*?), (\d+)#', $array['adres wydawniczy'], $adres);
+			$this->place = $adres[1];
+			$this->publisher = str_replace('Wydaw. ', 'Wydawnictwo ', $adres[2]);
+			$this->date = $adres[3];
 
-			$this->publisher = str_replace('Wydaw. ', 'Wydawnictwo ', substr($array['publisher'],0,-1));
-
-			$this->place = substr($array['publication_place'],0,-2);
-
-			$this->source = $address;
+			$this->source = $address . "&skin=reader";
 
 			$this->ISBN = $ISBN;
 		}
