@@ -40,7 +40,7 @@ class Nukat extends Parser {
 		{
 			$this->errors[]= array('base-disabled','NUKAT');
 		}
-		if (strpos($data, 'Brak wyników wyszukiwania') === false)
+		if (strpos($data, '<!-- Bib record -->') !== false)
 		{
 			$array = array();
 			preg_match_all(',
