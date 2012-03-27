@@ -230,9 +230,9 @@ foreach($newInputArray as $inputEntry)
 	foreach($selectedParsers[$inputEntry['parser']] as $parserClass)
 	{
 		$parserRaw = new $parserClass($inputEntry['data']);
-		$debug .= "Using $parserClass for ".$inputEntry['data'].": Got title '".$parserRaw->getTitle()."'\n";
 		if ($parserRaw->getTitle())
 		{
+			$debug .= "Using $parserClass for \"".$inputEntry['data']."\": Got title \"".$parserRaw->getTitle()."\"\n";
 			$templateRaw = $parserRaw->getOutput();
 
 			$template = $outputTemplates[$inputEntry['parser']];
@@ -242,6 +242,8 @@ foreach($newInputArray as $inputEntry)
 
 			unset($parserRaw,$templateRaw,$template);
 			break;
+		} else {
+			$debug .= "$parserClass does not seem to have entry for \"".$inputEntry['data']."\"\n";
 		}
 	}
 }
