@@ -68,7 +68,7 @@ class WWW extends Parser {
 			}
 			if ($this->title != '')
 			{
-				$this->url = $url;
+				$this->title = $url;
 			}
 			else
 			{
