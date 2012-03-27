@@ -13,7 +13,7 @@
 define('DATABASE_LINK',1);
 
 // Error handling & debugging
-define('DEBUG',1);
+define('DEBUG',0);
 
 // Very important message, use only in emergencies!
 $veryImportantMessage = '';
