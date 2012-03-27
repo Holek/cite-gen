@@ -13,7 +13,7 @@
 define('DATABASE_LINK',1);
 
 // Error handling & debugging
-define('DEBUG',0);
+define('DEBUG',1);
 
 // Very important message, use only in emergencies!
 $veryImportantMessage = '';
@@ -28,6 +28,7 @@ $error = new Error();
 // Functions, abstract classes
 require_once('./includes/Functions.php');
 require_once('./includes/abstractClasses.php');
+require_once('./parsers/ISBN/ISBNBaseParser.php');
 
 // I18N files
 require_once('./messages/Names.php');

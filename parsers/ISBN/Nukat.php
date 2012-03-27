@@ -8,29 +8,9 @@
  * @license GNU General Public Licence 2.0 or later
  */
 
-class Nukat extends Parser {
+class Nukat extends ISBNBaseParser {
 
-	protected $website;
-
-	private $title;
-	private $lastNames = array();
-	private $firstNames = array();
-	private $date;
-	private $publisher;
-	private $place;
-	private $source;
-	private $ISBN;
-	
-	/**
-	 * Array consisting of errors reported on the way
-	 * @var array
-	 */
-	private $errors = array();
-
-    /**
-     * Constructor for objects of class isbnDB
-     */
-	public function __construct($ISBN)
+	public function fetch($ISBN)
 	{
 		global $debug;
 		$ini = parse_ini_file('./parsers/ISBN/Nukat.ini');
@@ -54,14 +34,11 @@ class Nukat extends Parser {
       </td>
        
     </tr>,m', $data, $temp);
-
 			for ($i = 0; $i < count( $temp[1] ); $i ++) {
 				$array[ mb_strtolower($temp[1][$i]) ] = trim(preg_replace( array(
 					'@<a[^>]*?>@siu', '@</a>@siu'), '', $temp[2][$i]
 				));
 			}
-			$debug .= var_export($array, TRUE);
-			
 			$this->title = preg_replace('#/.*$#', '', $array['tytuł']);
 
 			preg_match('#(.*?), (.*?) \(#', $array['autor'], $author);
@@ -76,21 +53,9 @@ class Nukat extends Parser {
 			$this->source = $address . "&skin=reader";
 
 			$this->ISBN = $ISBN;
-		}
-		else
-		{
+		} else {
 			$this->title = false;
 		}
-	}
-
-    /**
-     * Title getter. Returns book title if found, FALSE if not found.
-     * 
-     * @return     mixed
-     */
-	public function getTitle()
-	{
-		return $this->title;
 	}
 
 	/**
@@ -127,16 +92,6 @@ class Nukat extends Parser {
 			'__sourceurl' => $this->source
 		);
 	}
-
-    /**
-     * Returns $errors.
-     * @see isbnDB::$errors
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
 }
 
 ?>

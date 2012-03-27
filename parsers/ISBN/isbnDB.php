@@ -8,30 +8,9 @@
  * @license GNU General Public Licence 2.0 or later
  */
 
-class isbnDB extends Parser {
+class isbnDB extends ISBNBaseParser {
 
-	protected $website;
-
-	private $title;
-	private $lastNames = array();
-	private $firstNames = array();
-	private $date;
-	private $publisher;
-	private $place;
-	private $source;
-	private $ISBN;
-	private $refname;
-	
-	/**
-	 * Array consisting of errors reported on the way
-	 * @var array
-	 */
-	private $errors = array();
-
-    /**
-     * Constructor for objects of class isbnDB
-     */
-	public function __construct($ISBN)
+	public function fetch($ISBN)
 	{
 		// To connect to ISBNdb.com database
 		// you have to obtain you own key
@@ -95,16 +74,6 @@ class isbnDB extends Parser {
 		}
 	}
 
-    /**
-     * Title getter. Returns book title if found, FALSE if not found.
-     * 
-     * @return     mixed
-     */
-	public function getTitle()
-	{
-		return $this->title;
-	}
-
 	/**
 	 * Book info getter
 	 *
@@ -140,15 +109,5 @@ class isbnDB extends Parser {
 			'__refname' => $this->refname
 		);
 	}
-
-    /**
-     * Returns $errors.
-     * @see isbnDB::$errors
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
 }
 ?>

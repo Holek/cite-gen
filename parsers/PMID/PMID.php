@@ -10,7 +10,6 @@
 
 class PMID extends Parser {
 
-	private $title;
 	private $lastNames = array();
 	private $firstNames = array();
 	private $journal;
@@ -24,16 +23,7 @@ class PMID extends Parser {
 	private $PMID;
 	private $refname;
 
-	/**
-	 * Array consisting of errors reported on the way
-	 * @var array
-	 */
-	private $errors = array();
-
-    /**
-     * Constructor for objects of class isbnDB
-     */
-	public function __construct($PMID)
+	public function fetch($PMID)
 	{
 		$this->source = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id='.$PMID.'&retmode=xml';
 		$url = file_get_contents($this->source);
@@ -88,16 +78,6 @@ class PMID extends Parser {
 		}
 	}
 
-    /**
-     * Title getter. Returns book title if found, FALSE if not found.
-     * 
-     * @return     mixed
-     */
-	public function getTitle()
-	{
-		return $this->title;
-	}
-
 	/**
 	 * Book info getter
 	 *
@@ -138,15 +118,5 @@ class PMID extends Parser {
 						'__sourceurl' => 'http://www.ncbi.nlm.nih.gov/pubmed/'.$this->PMID.'?dopt=Abstract'
 					);
 	}
-
-    /**
-     * Returns $errors.
-     * @see isbnDB::$errors
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
 }
 ?>

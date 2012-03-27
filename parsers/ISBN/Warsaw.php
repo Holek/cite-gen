@@ -8,29 +8,9 @@
  * @license GNU General Public Licence 2.0 or later
  */
 
-class Warsaw extends Parser {
+class Warsaw extends ISBNBaseParser {
 
-	protected $website;
-
-	private $title;
-	private $lastNames = array();
-	private $firstNames = array();
-	private $date;
-	private $publisher;
-	private $place;
-	private $source;
-	private $ISBN;
-	
-	/**
-	 * Array consisting of errors reported on the way
-	 * @var array
-	 */
-	private $errors = array();
-
-    /**
-     * Constructor for objects of class isbnDB
-     */
-	public function __construct($ISBN)
+	public function fetch($ISBN)
 	{
 		$url = @file_get_contents('http://alpha.bn.org.pl/search~S4*pol?/i/i/,,,/marc&FF=i'.$ISBN);
 		if (!$url)
@@ -146,16 +126,6 @@ class Warsaw extends Parser {
 		return $array;
 	}
 
-    /**
-     * Title getter. Returns book title if found, FALSE if not found.
-     * 
-     * @return     mixed
-     */
-	public function getTitle()
-	{
-		return $this->title;
-	}
-
 	/**
 	 * Book info getter
 	 *
@@ -190,15 +160,5 @@ class Warsaw extends Parser {
 			'__sourceurl' => $this->source
 		);
 	}
-
-    /**
-     * Returns $errors.
-     * @see isbnDB::$errors
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
 }
 ?>
