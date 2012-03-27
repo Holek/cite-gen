@@ -35,9 +35,9 @@ class WWW extends Parser {
 			}
 			fclose($fh);
 
-			preg_match('/<title>(.*?)<\/title>/i',$text,$title); // put found title in $title[1]
+			preg_match('/<title>(.*?)<\/title>/i', $text, $titlematch); // put found title in $title[1]
 
-			$this->title = trim(strip_tags(ereg_replace(' +', ' ', $title[1]))); // get rid of unnecessary whitespaces
+			$this->title = trim(strip_tags(ereg_replace(' +', ' ', $titlematch[1]))); // get rid of unnecessary whitespaces
 			$charset = 'UTF-8'; // default charset value
 			if ($foundCharset) // if found charset...
 			{
@@ -66,13 +66,10 @@ class WWW extends Parser {
 				$refname = preg_match('/((?:[a-z][a-z\.\d\-]+)\.(?:[a-z][a-z\-]+))(?![\w\.])/is',$url,$urlParts);
 				$this->refname = $urlParts[1];
 			}
-			if ($this->title != '')
-			{
+
+			$this->url = $url;
+			if ( ! $this->title ) {
 				$this->title = $url;
-			}
-			else
-			{
-				$this->title = false;
 			}
 		}
 		else

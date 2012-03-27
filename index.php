@@ -13,7 +13,7 @@
 define('DATABASE_LINK',1);
 
 // Error handling & debugging
-define('DEBUG',0);
+$DEBUG = 0;
 
 // Very important message, use only in emergencies!
 $veryImportantMessage = '';
@@ -324,7 +324,7 @@ $savant->query = $query;
 $savant->selects = $selects;
 
 $savant->veryImportantMessage = $veryImportantMessage;
-$savant->debug = ((DEBUG)?$debug:'');
+$savant->debug = ( ($DEBUG) ? $debug : "" );
 if (isset($mimetype)) {
 	header('Content-Type: '.$mimetype.';charset=UTF-8');
 }
