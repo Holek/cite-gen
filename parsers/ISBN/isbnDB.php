@@ -8,30 +8,11 @@
  * @license GNU General Public Licence 2.0 or later
  */
 
-class isbnDB extends Parser {
+class isbnDB extends ISBNBaseParser {
 
-	protected $website;
+	protected $refname;
 
-	private $title;
-	private $lastNames = array();
-	private $firstNames = array();
-	private $date;
-	private $publisher;
-	private $place;
-	private $source;
-	private $ISBN;
-	private $refname;
-	
-	/**
-	 * Array consisting of errors reported on the way
-	 * @var array
-	 */
-	private $errors = array();
-
-    /**
-     * Constructor for objects of class isbnDB
-     */
-	public function __construct($ISBN)
+	public function fetch($ISBN)
 	{
 		// To connect to ISBNdb.com database
 		// you have to obtain you own key
@@ -95,60 +76,14 @@ class isbnDB extends Parser {
 		}
 	}
 
-    /**
-     * Title getter. Returns book title if found, FALSE if not found.
-     * 
-     * @return     mixed
-     */
-	public function getTitle()
-	{
-		return $this->title;
+	protected function getSiteLanguage() {
+		return 'en';
 	}
 
-	/**
-	 * Book info getter
-	 *
-	 * @return     array
-	 */
-	public function getOutput()
-	{
-		// Array consisting of values, which keys are named
-		// after English Wikipedia {{Cite book}} template,
-		// with one exception: array '__names' consisting of
-		// subarrays 'last' and 'first'.
-		// These are equivalents of 'last' and 'first' fields,
-		// and these are arrays; some Wikipedias
-		// (ie. Polish) are using multiple author fields.
-		// In that case each last name in array has first name
-		// at the same index as it (ie. $this->lastNames[3]
-		// has to correspond with $this->firstNames[3];
-		// it has to be the same author)
-		
-		// Here you can also sort which fields are meant to be shown first
-		// at the generated template. Simply the first one goes first. ;)
-		return array(
-			'__names' => array(
-					'last' => $this->lastNames,
-					'first' => $this->firstNames
-				),
-			'title' => $this->title,
-			'date' => $this->date,
-			'publisher' => $this->publisher,
-			'location' => translateWithInterwiki($this->place,'en'),
-			'isbn' => $this->ISBN,
-			'__sourceurl' => $this->source,
-			'__refname' => $this->refname
-		);
+	public function getOutput() {
+		$o = parent::getOutput();
+		$o['__refname'] = $this->refname;
+		return $o;
 	}
-
-    /**
-     * Returns $errors.
-     * @see isbnDB::$errors
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
 }
 ?>
