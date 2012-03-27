@@ -10,20 +10,10 @@
 
 class WWW extends Parser {
 
-	private $title;
 	private $refname;
 	private $url;
 
-	/**
-	 * Array consisting of errors reported on the way
-	 * @var array
-	 */
-	private $errors = array();
-
-	/**
-	 * Constructor for objects of class WWW
-	 */
-	public function __construct($url)
+	public function fetch($url)
 	{
 		$fh = fopen($url,'r');
 		if ($fh) // if file found
@@ -78,7 +68,7 @@ class WWW extends Parser {
 			}
 			if ($this->title != '')
 			{
-				$this->url = $url;
+				$this->title = $url;
 			}
 			else
 			{
@@ -90,16 +80,6 @@ class WWW extends Parser {
 			$this->errors[] = array('WWW-error',$url);
 			$this->title = false;
 		}
-	}
-
-	/**
-	 * Title getter. Returns book title if found, FALSE if not found.
-	 * 
-	 * @return     mixed
-	 */
-	public function getTitle()
-	{
-		return $this->title;
 	}
 
 	/**
@@ -117,15 +97,6 @@ class WWW extends Parser {
 				'__refname' => $this->refname,
 				'__sourceurl' => $this->url
 			);
-	}
-
-	/**
-	 * Returns $errors.
-	 * @see isbnDB::$errors
-	 */
-	public function getErrors()
-	{
-		return $this->errors;
 	}
 }
 ?>

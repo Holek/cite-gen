@@ -48,18 +48,22 @@ abstract class InputCheck
  */
 abstract class Parser
 {
-    function __construct($input) {}
-	function getTitle() {}
-	function getOutput() {}
-	function getErrors() {}
+        protected $title = false;
+        protected $errors = array();
 
-	/**
-	 * Reduce memory usage
-	 */
-	function __destruct() {
-		foreach ( $this as $name => $value ) {
-			unset( $this->$name );
-		}
+	public function __construct($input) {
+		$this->fetch($input);
+	}
+
+	abstract public function fetch($identifier); 
+
+	public function getTitle() {
+		return $this->title;
+	}
+	abstract public function getOutput();
+
+	public function getErrors() {
+		return $this->errors;
 	}
 }
 
