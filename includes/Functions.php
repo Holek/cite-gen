@@ -347,3 +347,21 @@ function debugWrite($message)
 	global $debug;
 	$debug .= $message."\n";
 }
+
+function handleMetaRedirect($data)
+{
+	$data = preg_replace("$<!--.*-->$", "", $data);
+	$grp = array();
+	if( preg_match('#<meta +http-equiv="refresh" +content="(.*)"#siu', $data, $grp) ) {
+		if( isset( $grp[1] ) ) {
+			$items = explode( ";", $grp[1]);
+			foreach( $items as $item ) {
+				$keyval = explode( "=", $item, 2 );
+				if ( trim( strtolower( $keyval[0] ) ) === "url" ) {
+					return trim($keyval[1]);
+				}
+			}
+		}
+	}
+	return null;
+}

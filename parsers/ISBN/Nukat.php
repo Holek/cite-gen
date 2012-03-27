@@ -10,12 +10,30 @@
 
 class Nukat extends ISBNBaseParser {
 
+	public function fetchURL( $url, $params ) {
+		if ( strpos( $url, "?" ) > 0 ) {
+			$sep = "&";
+		} else {
+			$sep = "?";
+		}
+		$data = @file_get_contents($address = $url . $sep . $params);
+		return $data;
+	}
+
 	public function fetch($ISBN)
 	{
 		global $debug;
 		$ini = parse_ini_file('./parsers/ISBN/Nukat.ini');
 		$u1 = ((strlen($ISBN)==13)?'6000':'7');
-		$data = @file_get_contents($address = $ini['url'].'?search=KEYWORD&function=CARDSCR&pos=1&u1='.$u1.'&t1='.$ISBN);
+		$params = "search=KEYWORD&function=CARDSCR&pos=1&u1=" . $u1 . "&t1=" . $ISBN;
+		$url = $ini['url'];
+
+		$data = $this->fetchURL( $url, $params );
+		$redirect = handleMetaRedirect( $data );
+		if( $redirect ) {
+			$data = $this->fetchURL( $redirect, $params );
+		}
+		
 		if (!$data)
 		{
 			$this->errors[]= array('base-disabled','NUKAT');
