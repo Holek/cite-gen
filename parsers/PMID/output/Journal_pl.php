@@ -39,7 +39,7 @@ class Journal_pl extends Template {
 		{
 			$this->settings[$option] = $value;
 		}
-		$this->template = '{{Cytuj pismo '.(($this->settings['append-newlines'])?"\r\n":' ');
+		$this->template = '{{Cytuj pismo '.(($this->settings['append-newlines'])?"\r\n":'');
 		foreach ($book as $key => $value)
 		{
 			if (strpos($key,'__') === false)

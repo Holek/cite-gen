@@ -44,7 +44,7 @@ class Web_pl extends Template
 		{
 			$this->settings[$option] = $value;
 		}
-		$this->template = '{{Cytuj stronę '.(($this->settings['append-newlines'])?"\r\n":' ');
+		$this->template = '{{Cytuj stronę '.(($this->settings['append-newlines'])?"\r\n":'');
 		$this->appendParameter('last');
 		$this->appendParameter('first');
 		foreach ($input as $key => $value)
