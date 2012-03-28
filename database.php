@@ -13,11 +13,12 @@ if (!defined('DATABASE_LINK'))
 function dbconnect($database)
 {
 	global $error;
+	global $HOME;
 	// fix redundant error-reporting
 	$errorlevel = ini_set('error_reporting','0');
  
 	// connect
-	$mycnf = parse_ini_file('/home/'.get_current_user().'/.my.cnf');
+	$mycnf = parse_ini_file($HOME . '/.my.cnf');
 	$username = $mycnf['user'];
 	$password = $mycnf['password'];
 	unset($mycnf);

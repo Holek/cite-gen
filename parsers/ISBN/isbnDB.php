@@ -14,10 +14,11 @@ class isbnDB extends ISBNBaseParser {
 
 	public function fetch($ISBN)
 	{
+		global $HOME;
 		// To connect to ISBNdb.com database
 		// you have to obtain you own key
 		// at http://isbndb.com/
-		$pass = parse_ini_file('/home/'.get_current_user().'/.pass');
+		$pass = parse_ini_file($HOME . '/.pass');
 		$url = @file_get_contents('http://isbndb.com/api/books.xml?access_key='.$pass['ISBNDB'].'&results=authors&index1=isbn&value1='.$ISBN);
 		unset($pass);
 		if (!$url)

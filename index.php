@@ -18,6 +18,7 @@ $DEBUG = 0;
 // Very important message, use only in emergencies!
 $veryImportantMessage = '';
 
+$HOME = getenv("HOME");
 // Config - do not fail if file doesn't exist
 @include('./LocalSettings.php');
 
