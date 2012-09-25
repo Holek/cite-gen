@@ -18,6 +18,7 @@ class Journal_it extends Template {
 		'last' => 'cognome',
 		'first' => 'nome',
 		'authorlink' => 'linkautore',
+		'coauthors' => 'coautori',
 		'title' => 'titolo',
 		'year' => 'anno',
 		'month' => 'mese',

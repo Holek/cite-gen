@@ -25,6 +25,7 @@ class PMID extends Parser {
 
 	public function fetch($PMID)
 	{
+		$PMID=trim($PMID); //Remove trailing spaces, common problem if the PMID in the footer of PubMed is copied
 		$this->source = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id='.$PMID.'&retmode=xml';
 		$url = file_get_contents($this->source);
 		$p = @xml_parser_create();
